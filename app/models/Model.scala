@@ -1,5 +1,5 @@
 package models
 
 trait Model[T] {
-  var id: Long
+  def id:T
 }

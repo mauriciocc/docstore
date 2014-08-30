@@ -2,14 +2,24 @@
 
 <!DOCTYPE html>
 
-<html>
+<html ng-app="app">
     <head>
         <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")">        
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/font-awesome/css/font-awesome.css")">        
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/AdminLTE-master/css/AdminLTE.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+
     </head>
-    <body>
+    <body class="skin-black">
         @content
+
+        <script src="@routes.Assets.versioned("lib/jquery/jquery.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/angularjs/angular.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/angular-translate/angular-translate.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("vendor/AdminLTE-master/js/AdminLTE/app.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("js/main.js")" type="application/javascript"></script>
     </body>
 </html>

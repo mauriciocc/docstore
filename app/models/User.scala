@@ -1,4 +1,3 @@
 package models
 
-case class User(id: Long, email: String, name: String, password: String) extends Model[Long] {
-}
+case class User(id: Option[Long], email: String, name: String, password: String)
