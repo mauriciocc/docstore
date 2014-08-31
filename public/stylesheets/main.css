@@ -23,9 +23,16 @@ body > .header .logo .fa {
 }
 /* End */
 
+.navbar-nav > .user-menu > .dropdown-menu.user-dropdown {
+    width: 200px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+    height: 150px;
+}
 
 /* Added white aura around profile pic */
-.navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header img {
     height: 80px;
     width: 80px;
     border: 5px solid;
@@ -37,6 +44,13 @@ body > .header .logo .fa {
     padding: 20px;
 }
 /* End */
+
+
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > div > img.attachment {
+    width: 40%;
+    height: 40%;
+    margin-top: 10px;
+}
 
 /* Theme specific changes */
 
@@ -59,4 +73,22 @@ body > .header .logo .fa {
 /* Add a small right border to active item on menu*/
 .skin-black .sidebar > .sidebar-menu > li.active > a {
     border-left: 2px solid #ffffff;
+}
+
+/* Fix search input text color */
+.skin-black .sidebar-form input[type="text"] {
+    color: white;
+}
+
+/* Fix messages avatar */
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > div > img {
+    border: 3px solid #333;
+    box-shadow: 0 0 15px #333;
+}
+
+.dropdown-alert-message {
+    display: inline-block;
+    width: 220px;
+    line-height: 12px;
+    white-space: normal;
 }
