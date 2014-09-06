@@ -9,4 +9,12 @@ object Application extends Controller {
     Ok(views.html.register())
   }
 
+  def jsRoutes = Action { implicit request =>
+    Ok(
+      Routes.javascriptRouter("jsRoutes")(
+        routes.javascript.Users.save
+      )
+    ).as("text/javascript")
+  }
+
 }
