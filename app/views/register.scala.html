@@ -1,0 +1,30 @@
+@main("Login", "bg-black") {
+    <div class="form-box" id="login-box">
+        <div class="header">{{ 'create.your.account' | translate }}</div>
+        <form action="../../index.html" method="post">
+            <div class="body bg-gray">
+                <div class="form-group">
+                    <input type="text" name="userid" class="form-control" placeholder="{{ 'user.name' | translate }}"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="{{ 'user.display.name' | translate }}"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="email" class="form-control" placeholder="{{ 'email' | translate }}"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="{{ 'password' | translate }}"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password2" class="form-control" placeholder="{{ 'password.retype' | translate }}"/>
+                </div>
+            </div>
+            <div class="footer">
+
+                <button type="submit" class="btn bg-olive btn-block">{{ 'register' | translate }}</button>
+
+                <a href="login.html" class="text-center">{{ 'alredy.got.an.account' | translate }}</a>
+            </div>
+        </form>
+    </div>
+}

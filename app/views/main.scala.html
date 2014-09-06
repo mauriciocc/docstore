@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, bodyClass: String = "")(content: Html)
 
 <!DOCTYPE html>
 
@@ -13,7 +13,7 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
     </head>
-    <body class="skin-black">
+    <body class="skin-black @bodyClass">
         @content
 
         <script src="@routes.Assets.versioned("lib/jquery/jquery.js")" type="application/javascript"></script>
@@ -21,7 +21,7 @@
         <script src="@routes.Assets.versioned("lib/angular-translate/angular-translate.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("vendor/AdminLTE-master/js/AdminLTE/app.js")" type="application/javascript"></script>
-        <script src="@routes.Assets.versioned("js/main.js")" type="application/javascript"></script>
-        <script src="@routes.Assets.versioned("js/messages.pt.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("src/i18n/messages.pt.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("src/app.js")" type="application/javascript"></script>
     </body>
 </html>
