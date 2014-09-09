@@ -11,6 +11,9 @@ scalaVersion := "2.11.1"
 libraryDependencies ++= Seq(
   jdbc,  
   filters,
+  anorm,
+  "com.google.guava" % "guava" % "18.0",
+  "com.google.inject" % "guice" % "4.0-beta4",
   "org.webjars" % "bootstrap" % "3.2.0",
   "org.webjars" % "font-awesome" % "4.2.0",
   "org.webjars" % "ionicons" % "1.5.2",

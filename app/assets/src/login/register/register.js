@@ -1,13 +1,14 @@
-angular.module('docstore.login.register', ["$http"])
-    .controller("RegisterCtrl", function RegisterCtrl($scope, $http) {
+angular.module('docstore.login.register', [])
+    .controller("RegisterCtrl", ["$scope", "$http", function RegisterCtrl($scope, $http) {
 
         $scope.formData = {};
 
         $scope.register = function() {
-            $http.post(jsRoutes.controllers.Users.save, $scope.formData)
+            console.log($scope.formData);
+            $http.post(jsRoutes.controllers.Users.save().url, $scope.formData)
                 .success(function (data) {
                     console.log(data);
                 });
-        }
-    })
+        };
+    }])
 ;
