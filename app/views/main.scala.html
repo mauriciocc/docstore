@@ -1,24 +1,32 @@
-@(title: String, bodyClass: String = "")(content: Html)
-
+@()
 <!DOCTYPE html>
 
-<html ng-app="docstore">
+<html ng-app="docstore" ng-controller="MainCtrl">
     <head>
-        <title>@title</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")">        
-        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/font-awesome/css/font-awesome.css")">        
+        <title translate="{{pageTitle()}}"></title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/font-awesome/css/font-awesome.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/ionicons/css/ionicons.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/ng-table/ng-table.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/angularjs-toaster/toaster.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("vendor/AdminLTE-master/css/AdminLTE.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
     </head>
-    <body class="skin-black @bodyClass">
-        @content
-
+    <body class="skin-black {{ loginPage() ? 'bg-black' : ''}}">
+        <ng-include src="'/assets/src/commons/header.tpl.html'" ng-if="!loginPage()"></ng-include>
+        <ng-include src="'/assets/src/commons/body.tpl.html'" ng-if="!loginPage()"></ng-include>
+        <div ng-view ng-if="loginPage()"></div>
+        <toaster-container></toaster-container>
         <script src="@routes.Assets.versioned("lib/jquery/jquery.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("lib/angularjs/angular.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/angularjs/angular-route.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/angularjs/angular-cookies.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/angularjs/angular-animate.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("lib/angular-translate/angular-translate.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/ng-table/ng-table.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("lib/angularjs-toaster/toaster.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("lib/bootstrap/js/bootstrap.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("vendor/AdminLTE-master/js/AdminLTE/app.js")" type="application/javascript"></script>
 
@@ -26,5 +34,9 @@
         <script src="@routes.Assets.versioned("src/app.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("src/i18n/messages.pt.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("src/login/register/register.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("src/login/login.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("src/home/home.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("src/organizations/organizations.js")" type="application/javascript"></script>
+        <script src="@routes.Assets.versioned("src/main.js")" type="application/javascript"></script>
     </body>
 </html>

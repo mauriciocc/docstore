@@ -1,3 +1,4 @@
 brand.page.title=DocStore
 main.page=Página Principal
 documents=Documentos
+email.already.in.user=O email ''{0}'' já esta sendo utilizado no sistema

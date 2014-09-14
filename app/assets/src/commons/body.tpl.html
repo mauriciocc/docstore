@@ -1,0 +1,21 @@
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <ng-include src="'/assets/src/commons/menu.tpl.html'" ng-if="displayMenu()"></ng-include>
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+<!--        <section class="content-header">
+            <h1>
+                {{ 'main.page' | translate }}
+                <small>{{ 'dashboard' | translate }}</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-home"></i> {{ 'main.page' | translate }}</a></li>
+            </ol>
+        </section>-->
+
+        <!-- Main content -->
+        <section class="content" ng-view>
+        </section><!-- /.content -->
+    </aside><!-- /.right-side -->
+</div> <!-- ./wrapper -->

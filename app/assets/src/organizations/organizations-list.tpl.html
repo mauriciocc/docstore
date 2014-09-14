@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>{{editing ? 'Editando organização' : 'Nova organização'}}</legend>
+            <form name="organizationForm" novalidate ng-submit="save(organization)">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" name="id" ng-model="organization.id"/>
+
+                        <div class="form-group">
+                            <label class="control-label" translate>name</label>
+                            <input type="text" class="form-control" name="name" ng-model="organization.name" required/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" translate>account</label>
+                            <select name="accountId" ng-model="organization.accountId"
+                                    ng-options="account.id as account.name for account in accounts">
+                                <option>--</option>
+                            </select>
+                            <input type="text" class="form-control" name="account" ng-model="" required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-danger btn-flat" ng-show="editing" ng-click="cancelEdit()">
+                            <i class="fa fa-remove"></i>
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-success btn-flat">
+                            <i class="fa fa-save"></i>
+                            Salvar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+
+
+    <table class="table table-condensed table-striped">
+        <tr>
+            <th>Nome</th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="organization in organizations">
+            <td>{{organization.name}}</td>
+            <td>
+                <button ng-click="edit(organization)" class="btn btn-flat btn-warning btn-sm">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <button ng-click="remove(organization.id)" class="btn btn-flat btn-danger btn-sm">
+                    <i class="fa fa-remove"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

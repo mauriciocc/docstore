@@ -1,12 +1,11 @@
-@()(implicit lang: Lang)
 <header class="header">
     <a href="index.html" class="logo">
         <i class="fa fa-file"></i>
-            {{ 'brand.label' | translate }}
+        {{ 'brand.label' | translate }}
     </a>
-        <!-- Header Navbar: style can be found in header.less -->
+    <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
+        <!-- Sidebar toggle button-->
         <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -15,8 +14,8 @@
         </a>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                    <!-- Messages: style can be found in dropdown.less-->
-                <li class="dropdown messages-menu">
+                <!-- Messages: style can be found in dropdown.less-->
+<!--                <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
                         <span class="label label-success">2</span>
@@ -24,21 +23,21 @@
                     <ul class="dropdown-menu">
                         <li class="header">{{ 'you.have.x.messages' | translate: '{messages: 2}'}}</li>
                         <li>
-                                <!-- inner menu: contains the actual data -->
+                            &lt;!&ndash; inner menu: contains the actual data &ndash;&gt;
                             <ul class="menu">
-                                <li><!-- start message -->
+                                <li>&lt;!&ndash; start message &ndash;&gt;
                                     <a href="#">
                                         <div class="pull-left">
                                             <img src="@routes.Assets.versioned("images/bears/polar-bear.jpg")" class="img-circle avatar-border" alt="polar-bear"/>
                                         </div>
                                         <h4>
-                                                    {{ 'polar.bear' | translate }}
+                                            {{ 'polar.bear' | translate }}
                                             <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                         </h4>
                                         <p>{{ 'polar.bear.message' | translate }}</p>
                                     </a>
-                                </li><!-- end message -->
-                                <li><!-- start message -->
+                                </li>&lt;!&ndash; end message &ndash;&gt;
+                                <li>&lt;!&ndash; start message &ndash;&gt;
                                     <a href="#">
                                         <div class="pull-left">
                                             <img src="@routes.Assets.versioned("images/bears/brown-bear.jpg")" class="img-circle avatar-border" alt="polar-bear"/>
@@ -52,13 +51,13 @@
                                             <img src="http://www.elvincountry.com/travel-images/11707261.jpg" class="attachment">
                                         </div>
                                     </a>
-                                </li><!-- end message -->
+                                </li>&lt;!&ndash; end message &ndash;&gt;
                             </ul>
                         </li>
                         <li class="footer"><a href="#">{{ 'see.all.messages' | translate }}</a></li>
                     </ul>
                 </li>
-                    <!-- Notifications: style can be found in dropdown.less -->
+                &lt;!&ndash; Notifications: style can be found in dropdown.less &ndash;&gt;
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-warning"></i>
@@ -67,13 +66,13 @@
                     <ul class="dropdown-menu">
                         <li class="header">{{ 'you.have.x.notifications' | translate: '{notifications: 1}'}}</li>
                         <li>
-                                <!-- inner menu: contains the actual data -->
+                            &lt;!&ndash; inner menu: contains the actual data &ndash;&gt;
                             <ul class="menu">
                                 <li>
                                     <a href="#">
                                         <i class="fa fa-warning danger"></i>
                                         <div class="dropdown-alert-message">
-                                        {{ 'document.due.date.alert' | translate }}
+                                            {{ 'document.due.date.alert' | translate }}
                                         </div>
                                     </a>
                                 </li>
@@ -81,27 +80,27 @@
                         </li>
                         <li class="footer"><a href="#">View all</a></li>
                     </ul>
-                </li>
-                    <!-- User Account: style can be found in dropdown.less -->
+                </li>-->
+                <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle navbar-avatar-parent" data-toggle="dropdown">
-                        <img src="@routes.Assets.versioned("images/bears/party-bear.png")" class="img-circle navbar-avatar" alt="User Image" />
+                        <img src="https://getsatisfaction.com/images/user_default_large.png" class="img-circle navbar-avatar" alt="User Image" />
                     </a>
                     <ul class="dropdown-menu user-dropdown">
-                            <!-- User image -->
+                        <!-- User image -->
                         <li class="user-header">
-                            <img src="@routes.Assets.versioned("images/bears/party-bear.png")" class="img-circle" alt="User Image" />
+                            <img src="https://getsatisfaction.com/images/user_default_large.png" class="img-circle" alt="User Image" />
                             <p>
-                                        Ciço
+                                {{ currentUserName() }}
                             </p>
                         </li>
-                            <!-- Menu Footer-->
+                        <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-left">
+<!--                            <div class="pull-left">
                                 <a href="#" class="btn btn-default btn-flat">{{ 'my.profile' | translate }}</a>
-                            </div>
-                            <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">{{ 'sign.out' | translate }}</a>
+                            </div>-->
+                            <div class="pull-right" ng-controller="LoginCtrl">
+                                <a href="#" class="btn btn-default btn-flat" ng-click="logout()">{{ 'sign.out' | translate }}</a>
                             </div>
                         </li>
                     </ul>

@@ -17,7 +17,29 @@ angular.module('i18n', ['pascalprecht.translate'])
             'see.all.messages': 'Ver todas mensagens',
             'my.profile': 'Meu perfil',
             'sign.out': 'Sair',
-            'document.due.date.alert': "Faltam 5 dias para o documento 'DAS - 08/2014' vencer"
+            'document.due.date.alert': "Faltam 5 dias para o documento 'DAS - 08/2014' vencer",
+            'organizations': "Organizações",
+            'docstore.title': "DocStore",
+            'sign.me.in': "Acessar",
+            'create.an.account': "Criar uma conta",
+            'email': "Email",
+            'password': "Senha",
+            'invalid.login.credentials': "Usuário ou senha inválidos, tente novamente...",
+            'create.your.account': "Crie sua conta",
+            'user.name': "Nome do Usuário",
+            'user.display.name': "Nome Completo",
+            'password.retype': "Confirmação de senha",
+            'register': "Criar conta",
+            'already.got.an.account': "Já possui uma conta?",
+            'account.creation.success': "Sua conta foi criada com sucesso!",
+            'account.creation.error': "Ocorreu um erro na criação de sua conta, por favor verifique os dados informados",
+            'required': "* Obrigatório",
+            'invalid.mail': "* Email inválido",
+            'user.name.validation.pattern': "* O nome deve conter de 4 a 20 caracteres (utilize somente letras minúsculas e números)",
+            'only.letters': "* Somente letras",
+            'password.dont.match': "* Senha não confere",
+            'max.field.limit': "* No máximo {{max}} caracteres",
+            'min.field.limit': "* No minímo {{min}} caracteres"
         });
         $translateProvider.preferredLanguage('pt');
     }])

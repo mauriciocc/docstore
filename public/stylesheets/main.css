@@ -1,5 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Changa+One);
 
+.error-container {
+    text-align: right;
+}
+
+.error-container > .error {
+    color: red;
+}
+
 /* General adjusts */
 body > .header .logo {    
     font-style: normal;
@@ -28,7 +36,7 @@ body > .header .logo .fa {
 }
 
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
-    height: 150px;
+    height: 170px;
 }
 
 /* Added white aura around profile pic */
@@ -91,4 +99,90 @@ body > .header .logo .fa {
     width: 220px;
     line-height: 12px;
     white-space: normal;
+}
+
+/* Fix Menu */
+body  .header {
+    position: relative;
+    max-height: 100px;
+    z-index: 1030;
+}
+body  .header .navbar {
+    height: 50px;
+    margin-bottom: 0;
+    margin-left: 220px;
+}
+body  .header .navbar .sidebar-toggle {
+    float: left;
+    padding: 9px 5px;
+    margin-top: 8px;
+    margin-right: 0;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+body  .header .navbar .sidebar-toggle:hover .icon-bar {
+    background: #f6f6f6;
+}
+body  .header .navbar .sidebar-toggle .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+body  .header .navbar .sidebar-toggle .icon-bar + .icon-bar {
+    margin-top: 4px;
+}
+body  .header .navbar .nav > li.user > a {
+    font-weight: bold;
+}
+body  .header .navbar .nav > li.user > a > .fa,
+body  .header .navbar .nav > li.user > a > .glyphicon,
+body  .header .navbar .nav > li.user > a > .ion {
+    margin-right: 5px;
+}
+body  .header .navbar .nav > li > a > .label {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    position: absolute;
+    top: 7px;
+    right: 2px;
+    font-size: 10px;
+    font-weight: normal;
+    width: 15px;
+    height: 15px;
+    line-height: 1.0em;
+    text-align: center;
+    padding: 2px;
+}
+body  .header .navbar .nav > li > a:hover > .label {
+    top: 3px;
+}
+body  .header .logo {
+    float: left;
+    font-size: 20px;
+    line-height: 50px;
+    text-align: center;
+    padding: 0 10px;
+    width: 220px;
+    font-family: 'Kaushan Script', cursive;
+    font-weight: 500;
+    height: 50px;
+    display: block;
+}
+body  .header .logo .icon {
+    margin-right: 10px;
+}
+
+.alert-no-padding {
+    margin-left: 0;
+    padding-left: 15px;
 }
