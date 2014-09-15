@@ -55,6 +55,9 @@ angular.module("docstore.organizations", [])
         $scope.remove = function (id) {
             Organizations.remove(id).success(function () {
                 $scope.refresh();
+                $scope.editing = false;
+                resetOrganization();
+                toaster.pop('success', 'A organização foi excluida com sucesso!');
             });
         };
 
