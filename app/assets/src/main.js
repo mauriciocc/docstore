@@ -5,10 +5,18 @@ angular.module("docstore.main", [])
         var loginPage = false;
 
         return {
-            pageTitle: function(){return pageTitle;},
-            setPageTitle: function(pageTitle){this.pageTitle = pageTitle;},
-            loginPage: function(){return loginPage;},
-            setLoginPage: function(loginPage){this.loginPage = loginPage;}
+            pageTitle: function () {
+                return pageTitle;
+            },
+            setPageTitle: function (pageTitle) {
+                this.pageTitle = pageTitle;
+            },
+            loginPage: function () {
+                return loginPage;
+            },
+            setLoginPage: function (loginPage) {
+                this.loginPage = loginPage;
+            }
         };
     })
     .controller("MainCtrl", function ($scope, Auth, Page, $location) {
@@ -28,9 +36,13 @@ angular.module("docstore.main", [])
             return $location.path() === path;
         };
         $scope.currentUserName = function () {
-            var user = Auth.user();
-            var name = user.displayName;
-            return name ? name : Auth.user.name;
+            if (Auth.isAuthenticated()) {
+                var user = Auth.user();
+                var name = user.displayName;
+                return name ? name : Auth.user.name;
+            } else {
+                return "";
+            }
         };
     })
 ;

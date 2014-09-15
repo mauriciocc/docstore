@@ -24,8 +24,6 @@ object User {
 
 object UserRepo extends Repository[User] {
 
-  val table = "user_account"
-
   val userParser: RowParser[User] = {
     get[Option[Long]]("id") ~
       get[String]("email") ~
@@ -45,14 +43,14 @@ object UserRepo extends Repository[User] {
     DB.withTransaction(implicit con =>
       obj.id match {
         case Some(id) =>
-          SQL"update $table set name = ${obj.name},display_name = ${obj.displayName},email = ${obj.email},password = ${obj.password}) where id = ${obj.id}".executeUpdate()
+          SQL"update user_account set name = ${obj.name},display_name = ${obj.displayName},email = ${obj.email},password = ${obj.password}) where id = ${obj.id}".executeUpdate()
           obj
         case None =>
           if (isEmailInUse(obj.email)) {
             throw new EmailAlreadyInUseException(obj.email, s"Email '${obj.email}' already in use")
           }
-          val id: Option[Long] = SQL"insert into $table (name, display_name, email, password) values (${obj.name}, ${obj.displayName}, ${obj.email}, ${obj.password})".executeInsert()
-          AccountRepo.save(Account(None, obj.name, id.get))
+          val id: Option[Long] = SQL"insert into user_account (name, display_name, email, password) values (${obj.name}, ${obj.displayName}, ${obj.email}, ${obj.password})".executeInsert()
+          AccountRepo.saveNoTransaction(Account(None, obj.name, id.get))
           obj.copy(id = id);
       }
     )
@@ -60,13 +58,13 @@ object UserRepo extends Repository[User] {
 
   override def findOne(id: Long): Option[User] = {
     DB.withConnection(implicit con =>
-      SQL"select * from $table where id = $id".as(userParser.singleOpt)
+      SQL"select * from user_account where id = $id".as(userParser.singleOpt)
     )
   }
 
   override def findAll(): List[User] = {
     DB.withConnection(implicit con =>
-      SQL"select * from $table".as(usersParser)
+      SQL"select * from user_account".as(usersParser)
     )
   }
 
@@ -78,19 +76,19 @@ object UserRepo extends Repository[User] {
 
   def isEmailInUse(email: String): Boolean = {
     DB.withConnection(implicit con =>
-      SQL"select count(*) from $table where email = $email".as(scalar[Long].single) > 0
+      SQL"select count(*) from user_account where email = $email".as(scalar[Long].single) > 0
     )
   }
 
   def findByUserNameAndPassword(userName: String, password: String): Option[User] = {
     DB.withConnection(implicit con =>
-      SQL"select * from $table where name = $userName and password = $password".as(userParser.singleOpt)
+      SQL"select * from user_account where name = $userName and password = $password".as(userParser.singleOpt)
     )
   }
 
   def findByEmailAndPassword(email: String, password: String): Option[User] = {
     DB.withConnection(implicit con =>
-      SQL"select * from $table where email = $email and password = $password".as(userParser.singleOpt)
+      SQL"select * from user_account where email = $email and password = $password".as(userParser.singleOpt)
     )
   }
 

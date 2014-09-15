@@ -19,11 +19,18 @@ angular.module("docstore.organizations", [])
 
         $scope.organization = {};
         $scope.organizations = [];
+        $scope.accounts = [];
         $scope.editing = false;
+
+        var resetOrganization = function () {
+            $scope.organization = {};
+            $scope.organization.accountId = $scope.accounts[0].id;
+        };
 
         $scope.refresh = function () {
             Accounts.findAll().success(function (data) {
                 $scope.accounts = data;
+                resetOrganization();
             });
             Organizations.findAll().success(function (data) {
                 $scope.organizations = data;
@@ -32,11 +39,11 @@ angular.module("docstore.organizations", [])
 
         $scope.save = function (organization) {
             if ($scope.organizationForm.$valid) {
-                Organizations.save(organization).success(function (data) {
-                    $scope.organization = {};
+                Organizations.save(organization).success(function () {
                     $scope.refresh();
                     $scope.editing = false;
                     toaster.pop('success', "Organização salva com sucesso...");
+                    $scope.organizationForm.submitted = false;
                 }).error(function (err) {
                     toaster.pop('error', "Erro ao tentar salvar organização...");
                 });
@@ -51,9 +58,11 @@ angular.module("docstore.organizations", [])
             });
         };
 
-        $scope.edit = function (organization) {
-            $scope.organization = organization;
-            $scope.editing = true;
+        $scope.edit = function (id) {
+            Organizations.findOne(id).success(function (data) {
+                $scope.organization = data;
+                $scope.editing = true;
+            });
         };
 
         $scope.cancelEdit = function () {
@@ -61,12 +70,14 @@ angular.module("docstore.organizations", [])
             $scope.editing = false;
         };
 
-        $scope.getAccount = function (id) {
-          for(var account in $scope.accounts) {
-              if(account.id === id) {
-                  return account;
-              }
-          }
+        $scope.findAccountWithId = function (id) {
+            var el;
+            $scope.accounts.forEach(function (e) {
+                if(e.id == id) {
+                    el = e;
+                }
+            });
+            return el;
         };
 
         $scope.refresh();

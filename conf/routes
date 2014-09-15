@@ -17,6 +17,12 @@ GET           /api/organizations/:id        controllers.Organizations.findOne(id
 DELETE        /api/organizations/:id        controllers.Organizations.remove(id: Long)
 POST          /api/organizations            controllers.Organizations.save
 
+# Accounts
+GET           /api/accounts                 controllers.Accounts.findAll()
+GET           /api/accounts/:id             controllers.Accounts.findOne(id: Long)
+DELETE        /api/accounts/:id             controllers.Accounts.remove(id: Long)
+POST          /api/accounts                 controllers.Accounts.save
+
 
 GET           /routes.js                    controllers.Application.jsRoutes
 
@@ -24,5 +30,5 @@ GET           /routes.js                    controllers.Application.jsRoutes
 GET           /assets/*file                 controllers.Assets.versioned(path="/public", file: Asset)
 
 # Catch All
-GET           /                        controllers.Application.index(path = "")
+GET           /                             controllers.Application.index(path = "")
 GET           /*path                        controllers.Application.index(path)

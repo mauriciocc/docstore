@@ -37,11 +37,11 @@ object OrganizationRepo extends Repository[Organization] {
     DB.withTransaction(implicit con =>
       obj.id match {
         case Some(id) =>
-          SQL"update organization set name = ${obj.name}, account_id = name = ${obj.accountId} where id = ${obj.id}".executeUpdate()
+          SQL"update organization set name = ${obj.name}, account_id = ${obj.accountId} where id = ${obj.id}".executeUpdate()
           obj
         case None =>
           val id: Option[Long] =
-            SQL"insert into organization (name, account_id) values (${obj.name}, ${obj.accountId}})".executeInsert()
+            SQL"insert into organization (name, account_id) values (${obj.name}, ${obj.accountId})".executeInsert()
           obj.copy(id = id)
       }
     )
@@ -61,7 +61,7 @@ object OrganizationRepo extends Repository[Organization] {
 
   def findAll(userId: Long): List[Organization] = {
     DB.withConnection(implicit con =>
-      SQL"select * from organization where account_id in (select id from user where id = $userId)".as(organizationsParser)
+      SQL"select * from organization where account_id in (select id from user_account where id = $userId)".as(organizationsParser)
     )
   }
 

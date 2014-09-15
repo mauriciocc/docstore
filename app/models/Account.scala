@@ -1,5 +1,7 @@
 package models
 
+import java.sql.Connection
+
 import anorm.SqlParser._
 import anorm._
 import play.api.Play.current
@@ -33,16 +35,20 @@ object AccountRepo extends Repository[Account] {
     accountParser.*
   }
 
+  def saveNoTransaction(obj: Account)(implicit connection: Connection): Account = {
+    obj.id match {
+      case Some(id) =>
+        SQL"update account set name = ${obj.name}, owner_id = ${obj.ownerId} where id = ${obj.id}".executeUpdate()
+        obj
+      case None =>
+        val id: Option[Long] = SQL"insert into account (name, owner_id) values (${obj.name}, ${obj.ownerId})".executeInsert()
+        obj.copy(id = id)
+    }
+  }
+
   override def save(obj: Account): Account = {
     DB.withTransaction(implicit con =>
-      obj.id match {
-        case Some(id) =>
-          SQL"update account set name = ${obj.name} where id = ${obj.id}".executeUpdate()
-          obj
-        case None =>
-          val id: Option[Long] = SQL"insert into account (name) values (${obj.name})".executeInsert()
-          obj.copy(id = id)
-      }
+      saveNoTransaction(obj)
     )
   }
 

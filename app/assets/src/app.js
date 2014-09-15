@@ -49,6 +49,21 @@ angular.module("docstore", [
             .otherwise({redirectTo:'/login'});
         $locationProvider.html5Mode(true);
     }])
+    .directive('confirmationNeeded', function () {
+        return {
+            priority: 1,
+            terminal: true,
+            link: function (scope, element, attr) {
+                var msg = attr.confirmationNeeded || "Are you sure?";
+                var clickAction = attr.ngClick;
+                element.bind('click',function () {
+                    if ( window.confirm(msg) ) {
+                        scope.$eval(clickAction);
+                    }
+                });
+            }
+        };
+    })
     .run(function ($rootScope, $location, $cookies, $route, Page, Auth) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             Page.setLoginPage(!!next.loginPage);

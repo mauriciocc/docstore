@@ -39,7 +39,11 @@ angular.module('i18n', ['pascalprecht.translate'])
             'only.letters': "* Somente letras",
             'password.dont.match': "* Senha não confere",
             'max.field.limit': "* No máximo {{max}} caracteres",
-            'min.field.limit': "* No minímo {{min}} caracteres"
+            'min.field.limit': "* No minímo {{min}} caracteres",
+            'name': "Nome",
+            'account': "Conta",
+            'remove.confirmation': "Tem certeza que gostaria de remover este objeto '{{name}}' ?",
+            'cancel': "Cancelar"
         });
         $translateProvider.preferredLanguage('pt');
     }])
