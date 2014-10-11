@@ -28,6 +28,12 @@ GET           /api/accounts/:id             controllers.Accounts.findOne(id: Lon
 DELETE        /api/accounts/:id             controllers.Accounts.remove(id: Long)
 POST          /api/accounts                 controllers.Accounts.save
 
+# Customers
+GET           /api/customers                 controllers.Customers.findAll()
+GET           /api/customers/:id             controllers.Customers.findOne(id: Long)
+DELETE        /api/customers/:id             controllers.Customers.remove(id: Long)
+POST          /api/customers                 controllers.Customers.save
+
 
 GET           /routes.js                    controllers.Application.jsRoutes
 

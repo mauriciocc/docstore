@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>
+                {{ 'customers' | translate }}
+                <button ng-click="createNew()" class="btn btn-flat btn-success btn-sm pull-right">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </legend>
+            <table class="table table-condensed table-striped">
+                <tr>
+                    <th translate>name</th>
+                    <th translate>office</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="entity in entitys">
+                    <td>{{entity.name}}</td>
+                    <td>{{ findOrganizationWithId(entity.officeId).name }}</td>
+                    <td>
+                        <button ng-click="edit(entity.id)" class="btn btn-flat btn-warning btn-sm">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button ng-click="remove(entity.id)"
+                                confirmation-needed="{{'remove.confirmation' | translate: '{name: entity.name}'}}"
+                                class="btn btn-flat btn-danger btn-sm">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</div>

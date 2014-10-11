@@ -11,6 +11,7 @@ angular.module("docstore", [
     "docstore.organizations",
     "docstore.accounts",
     "docstore.offices",
+    "docstore.customers",
     "docstore.main"])
     .config(["$httpProvider", function ($httpProvider) {
         $httpProvider.interceptors.push(function($q, $location) {
@@ -51,6 +52,11 @@ angular.module("docstore", [
             .when('/offices', {
                 templateUrl: '/assets/src/offices/list.tpl.html',
                 controller: 'OfficesListCtrl',
+                public: false
+            })
+            .when('/customers', {
+                templateUrl: '/assets/src/customers/list.tpl.html',
+                controller: 'CustomersListCtrl',
                 public: false
             })
             .otherwise({redirectTo:'/login'});

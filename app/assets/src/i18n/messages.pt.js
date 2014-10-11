@@ -46,7 +46,10 @@ angular.module('i18n', ['pascalprecht.translate'])
             'cancel': "Cancelar",
             'save': "Salvar",
             'offices': "Escritórios",
-            'organization': "Organização"
+            'organization': "Organização",
+            'customer': "Cliente",
+            'office': "Escritório"
+
         });
         $translateProvider.preferredLanguage('pt');
     }])
