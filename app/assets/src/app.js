@@ -3,12 +3,14 @@ angular.module("docstore", [
     "ngCookies",
     "toaster",
     "i18n",
+    "ngDialog",
     /*"ngTable",*/
     "docstore.login",
     "docstore.login.register",
     "docstore.home",
     "docstore.organizations",
     "docstore.accounts",
+    "docstore.offices",
     "docstore.main"])
     .config(["$httpProvider", function ($httpProvider) {
         $httpProvider.interceptors.push(function($q, $location) {
@@ -44,6 +46,11 @@ angular.module("docstore", [
             .when('/organizations', {
                 templateUrl: '/assets/src/organizations/organizations-list.tpl.html',
                 controller: 'OrganizationListCtrl',
+                public: false
+            })
+            .when('/offices', {
+                templateUrl: '/assets/src/offices/list.tpl.html',
+                controller: 'OfficesListCtrl',
                 public: false
             })
             .otherwise({redirectTo:'/login'});

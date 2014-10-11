@@ -101,6 +101,12 @@ body > .header .logo .fa {
     white-space: normal;
 }
 
+
+/* Fix legend */
+legend {
+    padding-bottom: 10px;
+}
+
 /* Fix Menu */
 body  .header {
     position: relative;
@@ -186,3 +192,4 @@ body  .header .logo .icon {
     margin-left: 0;
     padding-left: 15px;
 }
+

@@ -2,26 +2,26 @@
     <div class="col-md-12">
         <fieldset>
             <legend>
-                {{ 'organizations' | translate }}
-                <button ng-click="newOrganization()" class="btn btn-flat btn-success btn-sm pull-right">
+                {{ 'offices' | translate }}
+                <button ng-click="createNew()" class="btn btn-flat btn-success btn-sm pull-right">
                     <i class="fa fa-plus"></i>
                 </button>
             </legend>
             <table class="table table-condensed table-striped">
                 <tr>
                     <th translate>name</th>
-                    <th translate>account</th>
+                    <th translate>organization</th>
                     <th></th>
                 </tr>
-                <tr ng-repeat="organization in organizations">
-                    <td>{{organization.name}}</td>
-                    <td>{{ findAccountWithId(organization.accountId).name }}</td>
+                <tr ng-repeat="office in offices">
+                    <td>{{office.name}}</td>
+                    <td>{{ findOrganizationWithId(office.organizationId).name }}</td>
                     <td>
-                        <button ng-click="edit(organization.id)" class="btn btn-flat btn-warning btn-sm">
+                        <button ng-click="edit(office.id)" class="btn btn-flat btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button ng-click="remove(organization.id)"
-                                confirmation-needed="{{'remove.confirmation' | translate: '{name: organization.name}'}}"
+                        <button ng-click="remove(office.id)"
+                                confirmation-needed="{{'remove.confirmation' | translate: '{name: office.name}'}}"
                                 class="btn btn-flat btn-danger btn-sm">
                             <i class="fa fa-remove"></i>
                         </button>

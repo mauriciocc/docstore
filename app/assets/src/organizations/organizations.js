@@ -15,12 +15,13 @@ angular.module("docstore.organizations", [])
             }
         };
     }])
-    .controller("OrganizationListCtrl", function ($scope, Organizations, Accounts, toaster) {
+    .controller("OrganizationListCtrl", function ($scope, Organizations, Accounts, toaster, ngDialog) {
 
         $scope.organization = {};
         $scope.organizations = [];
         $scope.accounts = [];
         $scope.editing = false;
+        $scope.dialog = null;
 
         var resetOrganization = function () {
             $scope.organization = {};
@@ -37,18 +38,19 @@ angular.module("docstore.organizations", [])
             });
         };
 
-        $scope.save = function (organization) {
-            if ($scope.organizationForm.$valid) {
+        $scope.save = function (organization, form) {
+            if (form.$valid) {
                 Organizations.save(organization).success(function () {
                     $scope.refresh();
                     $scope.editing = false;
                     toaster.pop('success', "Organização salva com sucesso...");
-                    $scope.organizationForm.submitted = false;
+                    form.submitted = false;
+                    $scope.dialog.close();
                 }).error(function (err) {
                     toaster.pop('error', "Erro ao tentar salvar organização...");
                 });
             } else {
-                $scope.organizationForm.submitted = true;
+                form.submitted = true;
             }
         };
 
@@ -61,10 +63,22 @@ angular.module("docstore.organizations", [])
             });
         };
 
+        $scope.newOrganization = function () {
+            $scope.organization = {};
+            $scope.dialog = ngDialog.open({
+                template: '/assets/src/organizations/organizations-form.tpl.html',
+                scope: $scope
+            });
+        };
+
         $scope.edit = function (id) {
             Organizations.findOne(id).success(function (data) {
                 $scope.organization = data;
                 $scope.editing = true;
+            });
+            $scope.dialog = ngDialog.open({
+                template: '/assets/src/organizations/organizations-form.tpl.html',
+                scope: $scope
             });
         };
 

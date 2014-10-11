@@ -24,7 +24,7 @@ object OrganizationRepo extends Repository[Organization] {
     get[Option[Long]]("id") ~
       get[String]("name") ~
       get[Long]("account_id") map {
-      case id ~ name ~ account_id=>
+      case id ~ name ~ account_id =>
         Organization(id, name, account_id)
     }
   }

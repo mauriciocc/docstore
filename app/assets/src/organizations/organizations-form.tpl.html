@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>{{editing ? 'Editando organização' : 'Nova organização'}}</legend>
+            <form name="organizationForm" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" name="id" ng-model="organization.id"/>
+
+                        <div class="form-group">
+                            <label class="control-label" translate>name</label>
+                            <input type="text" class="form-control" name="name" ng-model="organization.name" required/>
+
+                            <div class="error-container" ng-show="organizationForm.name.$invalid && organizationForm.submitted">
+                                <span class="error" ng-show="organizationForm.name.$error.required" translate>required</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" translate>account</label>
+                            <select name="accountId" ng-model="organization.accountId" class="form-control"
+                                    ng-options="account.id as account.name for account in accounts" required>
+                            </select>
+                            <div class="error-container" ng-show="organizationForm.name.$invalid && organizationForm.submitted">
+                                <span class="error" ng-show="organizationForm.name.$error.required" translate>required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-danger btn-flat" ng-click="closeThisDialog()">
+                            <i class="fa fa-remove"></i>
+                            {{'cancel' | translate}}
+                        </button>
+                        <button type="submit" class="btn btn-success btn-flat" ng-click="save(organization, organizationForm)">
+                            <i class="fa fa-save"></i>
+                            {{'save' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>

@@ -44,7 +44,9 @@ angular.module('i18n', ['pascalprecht.translate'])
             'account': "Conta",
             'remove.confirmation': "Tem certeza que gostaria de remover este objeto '{{name}}' ?",
             'cancel': "Cancelar",
-            'save': "Salvar"
+            'save': "Salvar",
+            'offices': "Escritórios",
+            'organization': "Organização"
         });
         $translateProvider.preferredLanguage('pt');
     }])
