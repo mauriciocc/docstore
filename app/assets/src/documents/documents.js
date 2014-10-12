@@ -32,24 +32,27 @@ angular.module("docstore.documents", [])
 
         var reset = function () {
             $scope.entity = {};
+            $scope.files = null;
             /*$scope.entity.customerId = $scope.customers[0].id;*/
         };
 
         $scope.refresh = function () {
             Customers.findAll().success(function (data) {
                 $scope.customers = data;
-                $scope.selectedCustomer = $scope.customers[0];
+                if(!$scope.selectedCustomer.id) {
+                    $scope.selectedCustomer = $scope.customers[0];
+                }
                 Documents.findAll($scope.selectedCustomer.id).success(function (data) {
                     $scope.entitys = data;
                 });
-                reset();
             });
+            reset();
 
         };
 
         $scope.save = function (entity, form) {
             if (form.$valid) {
-                Documents.upload($scope.files).success(function () {
+                var save = function () {
                     Documents.save(entity).success(function () {
                         $scope.refresh();
                         $scope.editing = false;
@@ -59,7 +62,15 @@ angular.module("docstore.documents", [])
                     }).error(function (err) {
                         toaster.pop('error', "Erro ao tentar salvar o documento...");
                     });
-                });
+                };
+
+                if($scope.files !== null) {
+                    Documents.upload($scope.files).success(function () {
+                        save();
+                    });
+                } else {
+                    save();
+                }
             } else {
                 form.submitted = true;
             }
