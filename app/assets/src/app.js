@@ -4,6 +4,7 @@ angular.module("docstore", [
     "toaster",
     "i18n",
     "ngDialog",
+    "angularFileUpload",
     /*"ngTable",*/
     "docstore.login",
     "docstore.login.register",
@@ -12,6 +13,7 @@ angular.module("docstore", [
     "docstore.accounts",
     "docstore.offices",
     "docstore.customers",
+    "docstore.documents",
     "docstore.main"])
     .config(["$httpProvider", function ($httpProvider) {
         $httpProvider.interceptors.push(function($q, $location) {
@@ -57,6 +59,11 @@ angular.module("docstore", [
             .when('/customers', {
                 templateUrl: '/assets/src/customers/list.tpl.html',
                 controller: 'CustomersListCtrl',
+                public: false
+            })
+            .when('/documents', {
+                templateUrl: '/assets/src/documents/list.tpl.html',
+                controller: 'DocumentsListCtrl',
                 public: false
             })
             .otherwise({redirectTo:'/login'});

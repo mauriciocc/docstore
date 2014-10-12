@@ -4,42 +4,49 @@
 
 # Home page
 
-POST          /login                        controllers.Authentication.login
-POST          /logout                       controllers.Authentication.logout
-GET           /ping                         controllers.Authentication.ping
+POST          /login                                              controllers.Authentication.login
+POST          /logout                                             controllers.Authentication.logout
+GET           /ping                                               controllers.Authentication.ping
 
 # Api
-GET           /api/users/:id                controllers.Users.view(id: Long)
-POST          /api/users                    controllers.Users.save
+GET           /api/users/:id                                      controllers.Users.view(id: Long)
+POST          /api/users                                          controllers.Users.save
 # Organizations
-GET           /api/organizations            controllers.Organizations.findAll()
-GET           /api/organizations/:id        controllers.Organizations.findOne(id: Long)
-DELETE        /api/organizations/:id        controllers.Organizations.remove(id: Long)
-POST          /api/organizations            controllers.Organizations.save
+GET           /api/organizations                                  controllers.Organizations.findAll()
+GET           /api/organizations/:id                              controllers.Organizations.findOne(id: Long)
+DELETE        /api/organizations/:id                              controllers.Organizations.remove(id: Long)
+POST          /api/organizations                                  controllers.Organizations.save
 # Offices
-GET           /api/offices                  controllers.Offices.findAll()
-GET           /api/offices/:id              controllers.Offices.findOne(id: Long)
-DELETE        /api/offices/:id              controllers.Offices.remove(id: Long)
-POST          /api/offices                  controllers.Offices.save
+GET           /api/offices                                        controllers.Offices.findAll()
+GET           /api/offices/:id                                    controllers.Offices.findOne(id: Long)
+DELETE        /api/offices/:id                                    controllers.Offices.remove(id: Long)
+POST          /api/offices                                        controllers.Offices.save
 
 # Accounts
-GET           /api/accounts                 controllers.Accounts.findAll()
-GET           /api/accounts/:id             controllers.Accounts.findOne(id: Long)
-DELETE        /api/accounts/:id             controllers.Accounts.remove(id: Long)
-POST          /api/accounts                 controllers.Accounts.save
+GET           /api/accounts                                       controllers.Accounts.findAll()
+GET           /api/accounts/:id                                   controllers.Accounts.findOne(id: Long)
+DELETE        /api/accounts/:id                                   controllers.Accounts.remove(id: Long)
+POST          /api/accounts                                       controllers.Accounts.save
 
 # Customers
-GET           /api/customers                 controllers.Customers.findAll()
-GET           /api/customers/:id             controllers.Customers.findOne(id: Long)
-DELETE        /api/customers/:id             controllers.Customers.remove(id: Long)
-POST          /api/customers                 controllers.Customers.save
+GET           /api/customers                                      controllers.Customers.findAll()
+GET           /api/customers/:id                                  controllers.Customers.findOne(id: Long)
+DELETE        /api/customers/:id                                  controllers.Customers.remove(id: Long)
+POST          /api/customers                                      controllers.Customers.save
+
+# Documents
+GET           /api/customers/$customerId<[0-9]+>/documents        controllers.Documents.findAll(customerId: Long)
+GET           /api/documents/:id                                  controllers.Documents.findOne(id: Long)
+DELETE        /api/documents/:id                                  controllers.Documents.remove(id: Long)
+POST          /api/documents                                      controllers.Documents.save
+POST          /api/documents/upload                               controllers.Documents.upload
 
 
-GET           /routes.js                    controllers.Application.jsRoutes
+GET           /routes.js                                          controllers.Application.jsRoutes
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                 controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                                       controllers.Assets.versioned(path="/public", file: Asset)
 
 # Catch All
-GET           /                             controllers.Application.index(path = "")
-GET           /*path                        controllers.Application.index(path)
+GET           /                                                   controllers.Application.index(path = "")
+GET           /*path                                              controllers.Application.index(path)

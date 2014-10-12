@@ -48,8 +48,8 @@ angular.module('i18n', ['pascalprecht.translate'])
             'offices': "Escritórios",
             'organization': "Organização",
             'customer': "Cliente",
-            'office': "Escritório"
-
+            'office': "Escritório",
+            'document': "Documento"
         });
         $translateProvider.preferredLanguage('pt');
     }])
