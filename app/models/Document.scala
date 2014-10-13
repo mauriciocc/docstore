@@ -76,5 +76,14 @@ object DocumentRepo extends Repository[Document] {
     )
   }
 
+  def databaseFileFor(documentId: Long): Option[DatabaseFile] = {
+    DB.withConnection(
+      implicit con => {
+        val doc = findOne(documentId)
+        DatabaseFileRepo.findOne(doc.get.databaseFileId.get)
+      }
+    )
+  }
+
 }
 

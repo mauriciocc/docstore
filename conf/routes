@@ -40,6 +40,7 @@ GET           /api/documents/:id                                  controllers.Do
 DELETE        /api/documents/:id                                  controllers.Documents.remove(id: Long)
 POST          /api/documents                                      controllers.Documents.save
 POST          /api/documents/upload                               controllers.Documents.upload
+GET           /api/documents/:id/download                         controllers.Documents.download(id: Long)
 
 
 GET           /routes.js                                          controllers.Application.jsRoutes

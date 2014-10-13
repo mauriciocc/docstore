@@ -4,6 +4,7 @@ import java.io.File
 import java.nio.file.Files
 import java.util.concurrent.TimeUnit
 
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
 import models.{OrganizationRepo, _}
 import play.api.cache.Cache
 import play.api.libs.Files.TemporaryFile
@@ -67,6 +68,15 @@ object Documents extends Controller with Security {
     }.getOrElse {
       BadRequest("Error on upload")
     }
+  }
+
+  def download(id: Long) = Action { implicit request =>
+    val dbFile = DocumentRepo.databaseFileFor(id).get
+    var disposition = s"""inline; filename="${dbFile.name}"""""
+    Ok(dbFile.content).withHeaders(
+      CONTENT_TYPE -> dbFile.contentType,
+      CONTENT_DISPOSITION -> disposition
+    )
   }
 
 }
