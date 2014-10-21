@@ -7,15 +7,12 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.{Format, JsPath}
 import play.api.Play.current
+import play.api.libs.json._
 
 case class Customer(id: Option[Long], name: String, officeId: Long)
 
 object Customer {
-  implicit val format: Format[Customer] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "name").format[String](minLength[String](1)) and
-      (JsPath \ "officeId").format[Long]
-    )(Customer.apply, unlift(Customer.unapply))
+  implicit val format: Format[Customer] = Json.format[Customer]
 }
 
 object CustomerRepo extends Repository[Customer] {

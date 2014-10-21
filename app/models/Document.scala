@@ -6,17 +6,12 @@ import play.api.Play.current
 import play.api.db.DB
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
-import play.api.libs.json.{Format, JsPath}
+import play.api.libs.json.{Json, Format, JsPath}
 
 case class Document(id: Option[Long], name: String, databaseFileId: Option[Long], customerId: Long) extends Model[Option[Long]]
 
 object Document {
-  implicit val format: Format[Document] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "name").format[String](minLength[String](1)) and
-      (JsPath \ "databaseFileId").formatNullable[Long] and
-      (JsPath \ "customerId").format[Long]
-    )(Document.apply, unlift(Document.unapply))
+  implicit val format: Format[Document] = Json.format[Document]
 }
 
 object DocumentRepo extends Repository[Document] {

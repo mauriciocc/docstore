@@ -5,17 +5,13 @@ import anorm._
 import play.api.db.DB
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
-import play.api.libs.json.{Format, JsPath}
+import play.api.libs.json.{Json, Format, JsPath}
 import play.api.Play.current
 
 case class Organization(id: Option[Long], name: String, accountId: Long) extends Model[Option[Long]]
 
 object Organization {
-  implicit val organizationFormat: Format[Organization] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "name").format[String](minLength[String](1)) and
-      (JsPath \ "accountId").format[Long]
-    )(Organization.apply, unlift(Organization.unapply))
+  implicit val organizationFormat: Format[Organization] = Json.format[Organization]
 }
 
 object OrganizationRepo extends Repository[Organization] {

@@ -4,22 +4,12 @@ import anorm.SqlParser._
 import anorm._
 import play.api.Play.current
 import play.api.db._
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
 import play.api.libs.json._
 
 case class User(id: Option[Long], email: String, name: String, displayName: Option[String], password: String)
 
 object User {
-
-  implicit val userFormat: Format[User] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "email").format[String](email) and
-      (JsPath \ "name").format[String](minLength[String](1)) and
-      (JsPath \ "displayName").formatNullable[String] and
-      (JsPath \ "password").format[String](minLength[String](6))
-    )(User.apply, unlift(User.unapply))
-
+  implicit val userFormat: Format[User] = Json.format[User]
 }
 
 object UserRepo extends Repository[User] {

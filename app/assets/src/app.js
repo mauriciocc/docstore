@@ -16,10 +16,10 @@ angular.module("docstore", [
     "docstore.documents",
     "docstore.main"])
     .config(["$httpProvider", function ($httpProvider) {
-        $httpProvider.interceptors.push(function($q, $location) {
+        $httpProvider.interceptors.push(function ($q, $location) {
             return {
-                'responseError': function(response) {
-                    if(response.status === 401 || response.status === 403) {
+                'responseError': function (response) {
+                    if (response.status === 401 || response.status === 403) {
                         $location.path('/login');
                     }
                     return $q.reject(response);
@@ -66,7 +66,7 @@ angular.module("docstore", [
                 controller: 'DocumentsListCtrl',
                 public: false
             })
-            .otherwise({redirectTo:'/login'});
+            .otherwise({redirectTo: '/login'});
         $locationProvider.html5Mode(true);
     }])
     .directive('confirmationNeeded', function () {
@@ -76,10 +76,18 @@ angular.module("docstore", [
             link: function (scope, element, attr) {
                 var msg = attr.confirmationNeeded || "Are you sure?";
                 var clickAction = attr.ngClick;
-                element.bind('click',function () {
-                    if ( window.confirm(msg) ) {
-                        scope.$eval(clickAction);
-                    }
+                element.bind('click', function () {
+                    swal({   title: "Tem certeza que deseja excluir este item ?",
+                        text: "Após exclusão não será possivel recuperar este registro",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55", confirmButtonText: "Excluir",
+                        closeOnConfirm: true
+                    }, function (isConfirm) {
+                        if (isConfirm) {
+                            scope.$eval(clickAction);
+                        }
+                    });
                 });
             }
         };
@@ -87,8 +95,8 @@ angular.module("docstore", [
     .run(function ($rootScope, $location, $cookies, $route, Page, Auth) {
         $rootScope.$on("$routeChangeStart", function (event, next, current) {
             Page.setLoginPage(!!next.loginPage);
-            if(!next.public) {
-                if(!Auth.isAuthenticated()) {
+            if (!next.public) {
+                if (!Auth.isAuthenticated()) {
                     $location.path("/login");
                 }
             }

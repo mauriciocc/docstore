@@ -5,17 +5,13 @@ import anorm._
 import play.api.db.DB
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
-import play.api.libs.json.{Format, JsPath}
+import play.api.libs.json.{Json, Format, JsPath}
 import play.api.Play.current
 
 case class Office(id: Option[Long], name: String, organizationId: Long)
 
 object Office {
-  implicit val officeFormat: Format[Office] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "name").format[String](minLength[String](1)) and
-      (JsPath \ "organizationId").format[Long]
-    )(Office.apply, unlift(Office.unapply))
+  implicit val officeFormat: Format[Office] = Json.format[Office]
 }
 
 object OfficeRepo extends Repository[Office] {

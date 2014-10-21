@@ -13,11 +13,7 @@ import play.api.libs.json._
 case class Account(id: Option[Long], name: String, ownerId: Long)
 
 object Account {
-  implicit val accountFormat: Format[Account] = (
-    (JsPath \ "id").formatNullable[Long] and
-      (JsPath \ "name").format[String](email) and
-      (JsPath \ "ownerId").format[Long]
-    )(Account.apply, unlift(Account.unapply))
+  implicit val accountFormat: Format[Account] = Json.format[Account]
 }
 
 object AccountRepo extends Repository[Account] {
