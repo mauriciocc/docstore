@@ -15,7 +15,7 @@
                 </tr>
                 <tr ng-repeat="entity in entitys">
                     <td>{{entity.name}}</td>
-                    <td>{{ findOrganizationWithId(entity.officeId).name }}</td>
+                    <td>{{ findOfficeWithId(entity.officeId).name }}</td>
                     <td>
                         <button ng-click="edit(entity.id)" class="btn btn-flat btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
