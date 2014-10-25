@@ -1,12 +1,11 @@
 package controllers
 
-import models.{UserRepo, User}
+import models.{User}
 import play.api.cache.Cache
 import play.api.data.Forms._
 import play.api.data._
 import play.api.libs.json._
 import play.api.mvc._
-
 
 trait Security { self: Controller =>
 
@@ -59,12 +58,12 @@ object Authentication extends Controller with Security {
     loginForm.bind(request.body).fold( // Bind JSON body to form values
       formErrors => BadRequest(Json.obj("err" -> formErrors.errorsAsJson)),
       loginData => {
-        UserRepo.findByEmailAndPassword(loginData.email, loginData.password).map { user =>
+        User.findBy(("email",loginData.email), ("password",loginData.password)).map { user =>
           val token = java.util.UUID.randomUUID().toString
           Ok(Json.obj(
             "authToken" -> token,
-            "userId" -> user.id.get
-          )).withToken(token -> user.id.get)
+            "userId" -> user.id
+          )).withToken(token -> user.id)
         } getOrElse NotFound(Json.obj("err" -> "User Not Found or Password Invalid"))
       }
     )
@@ -83,7 +82,7 @@ object Authentication extends Controller with Security {
    * This action can be used by the route service.
    */
   def ping() = HasToken() { token => userId => implicit request =>
-    UserRepo.findOne(userId).map { user =>
+    User.find(userId).map { user =>
       Ok(Json.obj("userId" -> userId)).withToken(token -> userId)
     } getOrElse NotFound (Json.obj("err" -> "User Not Found"))
   }

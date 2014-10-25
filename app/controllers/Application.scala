@@ -13,6 +13,7 @@ object Application extends Controller {
     Ok(
       Routes.javascriptRouter("jsRoutes")(
         routes.javascript.Users.save,
+        routes.javascript.Users.createAccount,
         routes.javascript.Users.view
       )
     ).as("text/javascript")

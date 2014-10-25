@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % "9.3-1102-jdbc41",
   "com.google.guava" % "guava" % "18.0",
   "com.google.inject" % "guice" % "4.0-beta4",
+  "com.github.aselab" %% "scala-activerecord" % "0.3.0",
+  "com.github.aselab" %% "scala-activerecord-play2" % "0.3.0",
   "org.webjars" % "bootstrap" % "3.2.0",
   "org.webjars" % "font-awesome" % "4.2.0",
   "org.webjars" % "ionicons" % "1.5.2",

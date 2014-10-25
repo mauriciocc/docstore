@@ -11,6 +11,7 @@ GET           /ping                                               controllers.Au
 # Api
 GET           /api/users/:id                                      controllers.Users.view(id: Long)
 POST          /api/users                                          controllers.Users.save
+POST          /api/users/create-account                           controllers.Users.createAccount
 # Organizations
 GET           /api/organizations                                  controllers.Organizations.findAll()
 GET           /api/organizations/:id                              controllers.Organizations.findOne(id: Long)

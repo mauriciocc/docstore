@@ -18,7 +18,7 @@ angular.module('docstore.login.register', [])
 
         $scope.register = function (userData) {
             if ($scope.registerForm.$valid) {
-                $http.post(jsRoutes.controllers.Users.save().url, userData)
+                $http.post(jsRoutes.controllers.Users.createAccount().url, userData)
                     .success(function (data) {
                         $translate("account.creation.success").then(function (msg) {
                             toaster.pop("success", msg);
