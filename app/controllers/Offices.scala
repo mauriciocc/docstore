@@ -1,6 +1,6 @@
 package controllers
 
-import models.{OrganizationRepo, _}
+import models._
 import play.api.libs.json._
 import play.api.mvc._
 
@@ -13,9 +13,9 @@ object Offices extends Controller with Security {
 
   def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>
     OfficeRepo.findOne(id) match {
-        case Some(org) => Ok(Json.toJson(org))
-        case None => NotFound(s"Office with id '$id not found")
-      }
+      case Some(org) => Ok(Json.toJson(org))
+      case None => NotFound(s"Office with id '$id not found")
+    }
   }
 
   def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>

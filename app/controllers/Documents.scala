@@ -1,16 +1,13 @@
 package controllers
 
-import java.io.File
 import java.nio.file.Files
 import java.util.concurrent.TimeUnit
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
-import models.{OrganizationRepo, _}
+import models._
 import play.api.cache.Cache
 import play.api.libs.Files.TemporaryFile
 import play.api.libs.json._
 import play.api.mvc._
-import play.mvc.Http.MultipartFormData.FilePart
 
 import scala.concurrent.duration.Duration
 
@@ -23,9 +20,9 @@ object Documents extends Controller with Security {
 
   def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>
     DocumentRepo.findOne(id) match {
-        case Some(org) => Ok(Json.toJson(org))
-        case None => NotFound(s"Customer with id '$id not found")
-      }
+      case Some(org) => Ok(Json.toJson(org))
+      case None => NotFound(s"Customer with id '$id not found")
+    }
   }
 
   def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>

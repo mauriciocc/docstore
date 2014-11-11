@@ -17,6 +17,8 @@ GET           /api/organizations                                  controllers.Or
 GET           /api/organizations/:id                              controllers.Organizations.findOne(id: Long)
 DELETE        /api/organizations/:id                              controllers.Organizations.remove(id: Long)
 POST          /api/organizations                                  controllers.Organizations.save
+PUT           /api/organizations/:id                              controllers.Organizations.update(id: Long)
+
 # Offices
 GET           /api/offices                                        controllers.Offices.findAll()
 GET           /api/offices/:id                                    controllers.Offices.findOne(id: Long)

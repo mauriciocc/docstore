@@ -1,6 +1,6 @@
 package controllers
 
-import models.{OrganizationRepo, _}
+import models._
 import play.api.libs.json._
 import play.api.mvc._
 
