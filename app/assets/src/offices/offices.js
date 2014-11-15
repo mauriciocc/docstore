@@ -2,7 +2,11 @@ angular.module("docstore.offices", [])
     .factory("Offices", ["$http", function ($http) {
         return {
             save: function (data) {
-                return $http.post("/api/offices", data);
+                if (!data.id || data.id === 0) {
+                    return $http.post("/api/offices", data);
+                } else {
+                    return $http.put("/api/offices/"+ data.id, data);
+                }
             },
             remove: function (id) {
                 return $http.delete("/api/offices/" + id);

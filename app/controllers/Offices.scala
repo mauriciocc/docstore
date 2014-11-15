@@ -1,41 +1,40 @@
 package controllers
 
+import com.github.aselab.activerecord.{ActiveRecordCompanion, PlayFormSupport}
 import models._
 import play.api.libs.json._
-import play.api.mvc._
 
 
-object Offices extends Controller with Security {
+object Offices extends Crud[Office] {
+
+  override val companion: ActiveRecordCompanion[Office] with PlayFormSupport[Office] = Office
+  override implicit val format: Format[Office] = Office.format
 
   def findAll() = HasToken() { _ => currentUserId => implicit request =>
-    Ok(Json.toJson(OfficeRepo.findAllForUser(currentUserId)));
+    Ok(Json.toJson(Office.forUser(currentUserId))); //TODO
   }
 
-  def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>
-    OfficeRepo.findOne(id) match {
-      case Some(org) => Ok(Json.toJson(org))
-      case None => NotFound(s"Office with id '$id not found")
+  /*
+  val crud = new BaseCrud[Office](Office)
+
+    def findAll() = HasToken() { _ => currentUserId => implicit request =>
+      Ok(Json.toJson(Office.find(currentUserId))); //TODO
     }
-  }
 
-  def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>
-    req.body.validate[Office].fold(
-      errors => {
-        BadRequest(JsError.toFlatJson(errors))
-      }, office => {
-        try {
-          Ok(Json.toJson(OfficeRepo.save(office)))
-        }
-        catch {
-          case e: Exception => BadRequest(Json.obj("error" -> e.getMessage))
-        }
-      }
-    )
-  }
+    def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>
+      crud.findOne(id)
+    }
 
-  def remove(id: Long) = HasToken() { _ => currentUserId => implicit req =>
-    OfficeRepo.remove(id)
-    Ok(s"Office with id '$id removed")
-  }
+    def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>
+      crud.create();
+    }
+
+    def update(id: Long) = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>
+      crud.update(id);
+    }
+
+    def remove(id: Long) = HasToken() { _ => currentUserId => implicit req =>
+      crud.delete(id)
+    }*/
 
 }

@@ -1,7 +1,5 @@
 package controllers
 
-import com.github.aselab.activerecord._
-import com.github.aselab.activerecord.dsl._
 import models._
 import play.api.libs.json._
 import play.api.mvc._
@@ -11,8 +9,8 @@ object Accounts extends Controller with Security {
 
   def findAll() = HasToken() { _ => currentUserId => implicit request =>
     Ok(Json.toJson(
-      Account.where(_.ownerId === currentUserId).toList
-    ));
+        Account.forUser(currentUserId)
+      ))
   }
 
   def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>

@@ -2,16 +2,23 @@ package models
 
 import com.github.aselab.activerecord._
 import com.github.aselab.activerecord.dsl._
-import play.api.libs.json
-import play.api.libs.json.Json
+import play.api.libs.json._
 
 case class Account(@Required name: String,
-                   ownerId: Long,
+                   userId: Long,
                    override val id: Long = 0) extends ActiveRecord {
-  lazy val owner = belongsTo[User]
+  lazy val user = belongsTo[User]
   lazy val organizations = hasMany[Organization]
 }
 
 object Account extends ActiveRecordCompanion[Account] with PlayFormSupport[Account] {
-  implicit val format: json.Format[Account] = Json.format[Account]
+  implicit val format = Json.format[Account]
+
+  def forUser(id: Long): List[Account] = {
+    User.find(id) match {
+      case Some(user) =>
+        user.accounts.toList
+    }
+  }
+
 }

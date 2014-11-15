@@ -40,6 +40,7 @@ angular.module("docstore.organizations", [])
 
     $scope.refresh = function () {
       Accounts.findAll().success(function (data) {
+        console.log(data);
         $scope.accounts = data;
         resetOrganization();
       });

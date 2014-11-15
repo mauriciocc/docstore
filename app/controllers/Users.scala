@@ -34,7 +34,7 @@ object Users extends Controller {
               Json.toJson(
                 Json.obj(
                   "user" -> u,
-                  "account" -> Account(name = u.name, ownerId = u.id).create
+                  "account" -> Account(name = u.name, userId = u.id).create
                 )
               )
             )

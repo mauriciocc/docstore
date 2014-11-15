@@ -1,70 +1,20 @@
 package models
 
-import anorm.SqlParser._
-import anorm._
-import play.api.db.DB
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.{Format, JsPath}
-import play.api.Play.current
+import com.github.aselab.activerecord._
+import com.github.aselab.activerecord.dsl._
 import play.api.libs.json._
 
-case class Customer(id: Option[Long], name: String, officeId: Long)
-
-object Customer {
-  implicit val format: Format[Customer] = Json.format[Customer]
+case class Customer(name: String, officeId: Long, override val id: Long = 0) extends ActiveRecord {
+  lazy val office = belongsTo[Office]
+  /*lazy val documents = hasMany[Document]*/
 }
 
-object CustomerRepo extends Repository[Customer] {
+object Customer extends ActiveRecordCompanion[Customer] with PlayFormSupport[Customer] {
+  implicit val format = Json.format[Customer]
 
-  val parser: RowParser[Customer] = {
-    get[Option[Long]]("id") ~
-      get[String]("name") ~
-      get[Long]("office_id") map {
-      case id ~ name ~ office_id =>
-        Customer(id, name, office_id)
-    }
-  }
-
-  val parsers: ResultSetParser[List[Customer]] = {
-    parser.*
-  }
-
-  override def save(obj: Customer): Customer = {
-    DB.withTransaction(implicit con =>
-      obj.id match {
-        case Some(id) =>
-          SQL"update customer set name = ${obj.name}, office_id = ${obj.officeId} where id = ${obj.id}".executeUpdate()
-          obj
-        case None =>
-          val id: Option[Long] =
-            SQL"insert into customer (name, office_id) values (${obj.name}, ${obj.officeId})".executeInsert()
-          obj.copy(id = id)
-      }
-    )
-  }
-
-  override def findOne(id: Long): Option[Customer] = {
-    DB.withConnection(implicit con =>
-      SQL"select * from customer where id = $id".as(parser.singleOpt)
-    )
-  }
-
-  override def findAll(): List[Customer] = {
-    DB.withConnection(implicit con =>
-      SQL"select * from customer".as(parsers)
-    )
-  }
-
-  def findAllForUser(userId: Long): List[Customer] = {
-    DB.withConnection(implicit con =>
-      SQL"select * from customer where office_id in (select id from office where organization_id in (select id from organization where account_id in (select id from user_account where id = $userId)))".as(parsers)
-    )
-  }
-
-  override def remove(id: Long): Unit = {
-    DB.withTransaction(implicit con =>
-      SQL"delete from customer where id = $id".executeUpdate()
+  def forUser(id: Long) = {
+    Office.forUser(id).flatten( off =>
+      off.customers.toList
     )
   }
 

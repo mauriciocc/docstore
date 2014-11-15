@@ -8,7 +8,7 @@ import play.api.mvc._
 object Organizations extends Controller with Security {
 
   def findAll() = HasToken() { _ => currentUserId => implicit request =>
-    Ok(Json.toJson(Organization.findAllForUser(currentUserId)));
+    Ok(Json.toJson(Organization.forUser(currentUserId)));
   }
 
   def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>

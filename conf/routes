@@ -24,6 +24,7 @@ GET           /api/offices                                        controllers.Of
 GET           /api/offices/:id                                    controllers.Offices.findOne(id: Long)
 DELETE        /api/offices/:id                                    controllers.Offices.remove(id: Long)
 POST          /api/offices                                        controllers.Offices.save
+PUT           /api/offices/:id                                    controllers.Offices.update(id: Long)
 
 # Accounts
 GET           /api/accounts                                       controllers.Accounts.findAll()
@@ -36,6 +37,7 @@ GET           /api/customers                                      controllers.Cu
 GET           /api/customers/:id                                  controllers.Customers.findOne(id: Long)
 DELETE        /api/customers/:id                                  controllers.Customers.remove(id: Long)
 POST          /api/customers                                      controllers.Customers.save
+PUT           /api/customers/:id                                  controllers.Customers.update(id: Long)
 
 # Documents
 GET           /api/customers/$customerId<[0-9]+>/documents        controllers.Documents.findAll(customerId: Long)
