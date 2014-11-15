@@ -18,6 +18,8 @@ object Account extends ActiveRecordCompanion[Account] with PlayFormSupport[Accou
     User.find(id) match {
       case Some(user) =>
         user.accounts.toList
+      case None =>
+        List.empty
     }
   }
 

@@ -44,6 +44,7 @@ GET           /api/customers/$customerId<[0-9]+>/documents        controllers.Do
 GET           /api/documents/:id                                  controllers.Documents.findOne(id: Long)
 DELETE        /api/documents/:id                                  controllers.Documents.remove(id: Long)
 POST          /api/documents                                      controllers.Documents.save
+PUT           /api/documents/:id                                  controllers.Documents.update(id: Long)
 POST          /api/documents/upload                               controllers.Documents.upload
 GET           /api/documents/:id/download                         controllers.Documents.download(id: Long)
 

@@ -1,81 +1,39 @@
 package models
 
-import anorm.SqlParser._
-import anorm._
+import com.github.aselab.activerecord._
+import com.github.aselab.activerecord.dsl._
 import play.api.Play.current
 import play.api.db.DB
-import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads._
-import play.api.libs.json.{Json, Format, JsPath}
+import play.api.libs.json._
 
-case class Document(id: Option[Long], name: String, databaseFileId: Option[Long], customerId: Long) extends Model[Option[Long]]
-
-object Document {
-  implicit val format: Format[Document] = Json.format[Document]
+case class Document(name: String, databaseFileId: Option[Long], customerId: Long, override val id: Long = 0) extends ActiveRecord {
+  lazy val customer = belongsTo[Customer]
 }
 
-object DocumentRepo extends Repository[Document] {
+object Document extends ActiveRecordCompanion[Document] with PlayFormSupport[Document] {
 
-  val parser: RowParser[Document] = {
-    get[Option[Long]]("id") ~
-      get[String]("name") ~
-      get[Option[Long]]("database_file_id") ~
-      get[Long]("customer_id") map {
-      case id ~ name ~ database_file_id ~ customer_id =>
-        Document(id, name, database_file_id, customer_id)
-    }
-  }
+  implicit val format = Json.format[Document]
 
-  val parsers: ResultSetParser[List[Document]] = {
-    parser.*
-  }
-
-  override def save(obj: Document): Document = {
-    DB.withTransaction(implicit con =>
-      obj.id match {
-        case Some(id) =>
-          SQL"update document set name = ${obj.name}, database_file_id = ${obj.databaseFileId}, customer_id = ${obj.customerId} where id = ${obj.id}".executeUpdate()
-          obj
-        case None =>
-          val id: Option[Long] =
-            SQL"insert into document (name, database_file_id, customer_id) values (${obj.name}, ${obj.databaseFileId}, ${obj.customerId})".executeInsert()
-          obj.copy(id = id)
-      }
+  def forUser(id: Long) = {
+    Customer.forUser(id).flatten(cus =>
+      cus.documents.toList
     )
   }
 
-  override def findOne(id: Long): Option[Document] = {
-    DB.withConnection(implicit con =>
-      SQL"select * from document where id = $id".as(parser.singleOpt)
-    )
+  def forCustomer(id: Long) = {
+    Document.where(_.customerId === id).toList
   }
 
-  override def findAll(): List[Document] = {
-    DB.withConnection(implicit con =>
-      SQL"select * from document".as(parsers)
-    )
-  }
+}
 
-  def findAllForCustomer(customerId: Long): List[Document] = {
-    DB.withConnection(implicit con =>
-      SQL"select * from document where customer_id = $customerId".as(parsers)
-    )
-  }
-
-  override def remove(id: Long): Unit = {
-    DB.withTransaction(
-      implicit con => {
-        SQL"delete from database_file where id = (select database_file_id from document where id = $id)".executeUpdate()
-        SQL"delete from document where id = $id".executeUpdate()
-      }
-    )
-  }
-
+object DocumentRepo {
   def databaseFileFor(documentId: Long): Option[DatabaseFile] = {
     DB.withConnection(
       implicit con => {
-        val doc = findOne(documentId)
-        DatabaseFileRepo.findOne(doc.get.databaseFileId.get)
+        Document.find(documentId) match {
+          case Some(doc) =>
+            DatabaseFileRepo.findOne(doc.databaseFileId.get)
+        }
       }
     )
   }

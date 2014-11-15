@@ -3,6 +3,7 @@ package controllers
 import java.nio.file.Files
 import java.util.concurrent.TimeUnit
 
+import com.github.aselab.activerecord.{PlayFormSupport, ActiveRecordCompanion}
 import models._
 import play.api.cache.Cache
 import play.api.libs.Files.TemporaryFile
@@ -12,20 +13,16 @@ import play.api.mvc._
 import scala.concurrent.duration.Duration
 
 
-object Documents extends Controller with Security {
+object Documents extends Crud[Document] {
+
+  override val companion: ActiveRecordCompanion[Document] with PlayFormSupport[Document] = Document
+  override implicit val format: Format[Document] = Document.format
 
   def findAll(customerId: Long) = HasToken() { _ => currentUserId => implicit request =>
-    Ok(Json.toJson(DocumentRepo.findAllForCustomer(customerId)));
+    Ok(Json.toJson(Document.forCustomer(customerId)));
   }
 
-  def findOne(id: Long) = HasToken() { _ => currentUserId => implicit request =>
-    DocumentRepo.findOne(id) match {
-      case Some(org) => Ok(Json.toJson(org))
-      case None => NotFound(s"Customer with id '$id not found")
-    }
-  }
-
-  def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>
+  /*def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>
     req.body.validate[Document].fold(
       errors => {
         BadRequest(JsError.toFlatJson(errors))
@@ -38,10 +35,11 @@ object Documents extends Controller with Security {
               val bytes = Files.readAllBytes(file.ref.file.toPath)
               val contentType = file.contentType.getOrElse("application/octet-stream")
               val dbFile = DatabaseFileRepo.save(DatabaseFile(None, file.filename, contentType, bytes))
-              DocumentRepo.save(document.copy(databaseFileId = dbFile.id));
+              /*DocumentRepo.save(document.copy(databaseFileId = dbFile.id));*/
             case None =>
-              document.id.getOrElse(throw new IllegalStateException())
-              DocumentRepo.save(document)
+              NotFound
+              /*document.id.getOrElse(throw new IllegalStateException())
+              DocumentRepo.save(document)*/
           }
           Cache.remove(key)
           Ok(Json.toJson(doc))
@@ -51,12 +49,7 @@ object Documents extends Controller with Security {
         }
       }
     )
-  }
-
-  def remove(id: Long) = HasToken() { _ => currentUserId => implicit req =>
-    DocumentRepo.remove(id)
-    Ok(s"Document with id '$id removed")
-  }
+  }*/
 
   def upload = HasToken(parse.multipartFormData) { _ => userId => request =>
     request.body.file("file").map { file =>
@@ -75,5 +68,6 @@ object Documents extends Controller with Security {
       CONTENT_DISPOSITION -> disposition
     )
   }
+
 
 }

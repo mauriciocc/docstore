@@ -6,7 +6,7 @@ import play.api.libs.json._
 
 case class Customer(name: String, officeId: Long, override val id: Long = 0) extends ActiveRecord {
   lazy val office = belongsTo[Office]
-  /*lazy val documents = hasMany[Document]*/
+  lazy val documents = hasMany[Document]
 }
 
 object Customer extends ActiveRecordCompanion[Customer] with PlayFormSupport[Customer] {
