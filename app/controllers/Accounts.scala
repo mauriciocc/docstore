@@ -20,7 +20,7 @@ object Accounts extends Controller with Security {
     }
   }
 
-  def save() = HasToken(BodyParsers.parse.json) { _ => currentUserId => implicit req =>
+  def save() = HasToken() { _ => currentUserId => implicit req =>
     Account.form.bindFromRequest.fold(
       errors => BadRequest(errors.errorsAsJson),
       account =>

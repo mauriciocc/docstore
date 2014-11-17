@@ -6,8 +6,12 @@ import play.api.Play.current
 import play.api.db.DB
 import play.api.libs.json._
 
-case class Document(name: String, databaseFileId: Option[Long], customerId: Long, override val id: Long = 0) extends ActiveRecord {
+case class Document(name: String,
+                    databaseFileId: Option[Long],
+                    customerId: Long,
+                    override val id: Long = 0) extends ActiveRecord {
   lazy val customer = belongsTo[Customer]
+  lazy val databaseFile = belongsTo[DatabaseFile]
 }
 
 object Document extends ActiveRecordCompanion[Document] with PlayFormSupport[Document] {
@@ -24,19 +28,10 @@ object Document extends ActiveRecordCompanion[Document] with PlayFormSupport[Doc
     Document.where(_.customerId === id).toList
   }
 
-}
-
-object DocumentRepo {
-  def databaseFileFor(documentId: Long): Option[DatabaseFile] = {
-    DB.withConnection(
-      implicit con => {
-        Document.find(documentId) match {
-          case Some(doc) =>
-            DatabaseFileRepo.findOne(doc.databaseFileId.get)
-        }
-      }
-    )
+  def databaseFileFor(id: Long): Option[DatabaseFile] = {
+    find(id) match {
+      case Some(document) =>
+        document.databaseFile.toOption
+    }
   }
-
 }
-

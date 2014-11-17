@@ -9,5 +9,6 @@ object Tables extends ActiveRecordTables with PlaySupport {
   val organizations = table[Organization]("organization")
   val offices = table[Office]("office")
   val customers = table[Customer]("customer")
-  val document = table[Document]("document")
+  val documents = table[Document]("document")
+  val databaseFiles = table[DatabaseFile]("database_file")
 }
