@@ -30,7 +30,6 @@ object Documents extends Crud[Document] {
   }*/
 
   override def save() = HasToken() { _ => currentUserId => implicit req =>
-
     companion.form.bindFromRequest.fold(
       errors => {
         BadRequest(errors.errorsAsJson)

@@ -48,6 +48,10 @@ PUT           /api/documents/:id                                  controllers.Do
 POST          /api/documents/upload                               controllers.Documents.upload
 GET           /api/documents/:id/download                         controllers.Documents.download(id: Long)
 
+# Notifications
+GET           /api/notifications                                  controllers.Notifications.findAll()
+POST          /api/notifications/:id/mark-as-read                 controllers.Notifications.markAsRead(id: Long)
+
 
 GET           /routes.js                                          controllers.Application.jsRoutes
 

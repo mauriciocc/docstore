@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <fieldset>
             <legend>{{editing ? 'Editando documento' : 'Novo documento'}}</legend>
-            <form name="documentForm" novalidate >
+            <form name="documentForm" novalidate>
                 <div class="row">
                     <div class="col-md-12">
                         <input type="hidden" name="id" ng-model="entity.id"/>
@@ -12,21 +12,29 @@
                             <input type="text" class="form-control" name="name" ng-model="entity.name" required/>
 
                             <div class="error-container" ng-show="documentForm.name.$invalid && documentForm.submitted">
-                                <span class="error" ng-show="documentForm.name.$error.required" translate>required</span>
+                                <span class="error" ng-show="documentForm.name.$error.required"
+                                      translate>required</span>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" translate>due.date</label>
+                            <input type="text" class="form-control" name="dueDate" ng-model="entity.dueDate" value="{{entity.dueDate | date}}"/>
                         </div>
                         <div class="form-group">
                             <label class="control-label" translate>customer</label>
                             <select name="accountId" ng-model="entity.customerId" class="form-control"
                                     ng-options="customer.id as customer.name for customer in customers" required>
                             </select>
+
                             <div class="error-container" ng-show="documentForm.name.$invalid && documentForm.submitted">
-                                <span class="error" ng-show="documentForm.name.$error.required" translate>required</span>
+                                <span class="error" ng-show="documentForm.name.$error.required"
+                                      translate>required</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label" translate>document</label>
                             <input type="file" ng-file-select="onFileSelect($files)" ng-show="files == null">
+
                             <p ng-show="files != null">
                                 {{files[0].name}}
                                 <a ng-click="clearFiles()">

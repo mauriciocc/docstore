@@ -15,32 +15,40 @@
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
-<!--                <li class="dropdown messages-menu">
+               <li class="dropdown messages-menu" ng-controller="NotificationsCtrl">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
-                        <span class="label label-success">2</span>
+                        <span class="label label-success">{{newCount}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">{{ 'you.have.x.messages' | translate: '{messages: 2}'}}</li>
-                        <li>
-                            &lt;!&ndash; inner menu: contains the actual data &ndash;&gt;
-                            <ul class="menu">
-                                <li>&lt;!&ndash; start message &ndash;&gt;
-                                    <a href="#">
+                        <li class="header">
+                            {{ 'you.have.x.messages' | translate: '{messages: newCount}'}}
+                                <i class="fa fa-refresh pull-right" ng-click="refresh();" style="cursor:pointer; color: #428BCA;"></i>
+                        <li style="cursor:default;">
+                            <ul class="menu" style="cursor:default;">
+
+                                <li ng-repeat="n in notifications" style="cursor:default;">
+                                    <a href="#" style="cursor:default;">
                                         <div class="pull-left">
-                                            <img src="@routes.Assets.versioned("images/bears/polar-bear.jpg")" class="img-circle avatar-border" alt="polar-bear"/>
+                                            <div class="img-circle avatar-border">
+                                                <i class="fa fa-file"></i>
+                                            </div>
                                         </div>
                                         <h4>
-                                            {{ 'polar.bear' | translate }}
-                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                            DocStore
+                                            <small>
+                                                <i class="fa fa-eye" ng-show="!n.readDate" ng-click="markAsRead(n);" style="cursor:pointer; color: #428BCA;"></i>
+                                                <i class="fa fa-clock-o"></i>
+                                                5 mins
+                                            </small>
                                         </h4>
-                                        <p>{{ 'polar.bear.message' | translate }}</p>
+                                        <p>{{ n.message }}</p>
                                     </a>
-                                </li>&lt;!&ndash; end message &ndash;&gt;
-                                <li>&lt;!&ndash; start message &ndash;&gt;
+                                </li>
+                                <!--<li>
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="@routes.Assets.versioned("images/bears/brown-bear.jpg")" class="img-circle avatar-border" alt="polar-bear"/>
+                                            <img src="@routes.Assets.versioned('images/bears/brown-bear.jpg')" class="img-circle avatar-border" alt="polar-bear"/>
                                         </div>
                                         <h4>
                                             {{ 'brown.bear' | translate }}
@@ -51,36 +59,36 @@
                                             <img src="http://www.elvincountry.com/travel-images/11707261.jpg" class="attachment">
                                         </div>
                                     </a>
-                                </li>&lt;!&ndash; end message &ndash;&gt;
+                                </li>-->
                             </ul>
                         </li>
                         <li class="footer"><a href="#">{{ 'see.all.messages' | translate }}</a></li>
                     </ul>
                 </li>
-                &lt;!&ndash; Notifications: style can be found in dropdown.less &ndash;&gt;
-                <li class="dropdown notifications-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-warning"></i>
-                        <span class="label label-warning">1</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li class="header">{{ 'you.have.x.notifications' | translate: '{notifications: 1}'}}</li>
-                        <li>
-                            &lt;!&ndash; inner menu: contains the actual data &ndash;&gt;
-                            <ul class="menu">
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning danger"></i>
-                                        <div class="dropdown-alert-message">
-                                            {{ 'document.due.date.alert' | translate }}
-                                        </div>
+                <!--                 &lt;!&ndash; Notifications: style can be found in dropdown.less &ndash;&gt;
+                                <li class="dropdown notifications-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-warning"></i>
+                                        <span class="label label-warning">1</span>
                                     </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="footer"><a href="#">View all</a></li>
-                    </ul>
-                </li>-->
+                                    <ul class="dropdown-menu">
+                                        <li class="header">{{ 'you.have.x.notifications' | translate: '{notifications: 1}'}}</li>
+                                        <li>
+                                            &lt;!&ndash; inner menu: contains the actual data &ndash;&gt;
+                                            <ul class="menu">
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="fa fa-warning danger"></i>
+                                                        <div class="dropdown-alert-message">
+                                                            {{ 'document.due.date.alert' | translate }}
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="footer"><a href="#">View all</a></li>
+                                    </ul>
+                                </li>-->
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle navbar-avatar-parent" data-toggle="dropdown">

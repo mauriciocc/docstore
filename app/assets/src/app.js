@@ -5,7 +5,7 @@ angular.module("docstore", [
     "i18n",
     "ngDialog",
     "angularFileUpload",
-    /*"ngTable",*/
+    /*"smart-table",*/
     "docstore.login",
     "docstore.login.register",
     "docstore.home",
@@ -14,6 +14,7 @@ angular.module("docstore", [
     "docstore.offices",
     "docstore.customers",
     "docstore.documents",
+    "docstore.notifications",
     "docstore.main"])
     .config(["$httpProvider", function ($httpProvider) {
         $httpProvider.interceptors.push(function ($q, $location) {

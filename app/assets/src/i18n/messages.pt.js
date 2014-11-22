@@ -49,7 +49,8 @@ angular.module('i18n', ['pascalprecht.translate'])
             'organization': "Organização",
             'customer': "Cliente",
             'office': "Escritório",
-            'document': "Documento"
+            'document': "Documento",
+            'due.date': "Data de Vencimento"
         });
         $translateProvider.preferredLanguage('pt');
     }])
