@@ -33,6 +33,9 @@ angular.module('docstore.login', [])
             user: function () {
                 return user;
             },
+            getToken: function () {
+              return token;
+            },
             setUser: function (user) {
                 this.user = user;
             },

@@ -11,5 +11,6 @@ object Tables extends ActiveRecordTables with PlaySupport {
   val customers = table[Customer]("customer")
   val documents = table[Document]("document")
   val databaseFiles = table[DatabaseFile]("database_file")
+  val databaseFileDownloads = table[DatabaseFileDownload]("database_file_download")
   val notifications = table[Notification]("notification")
 }

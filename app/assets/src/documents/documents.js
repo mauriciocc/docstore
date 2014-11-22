@@ -25,7 +25,7 @@ angular.module("docstore.documents", [])
       }
     };
   })
-  .controller("DocumentsListCtrl", function ($scope, Documents, Customers, toaster, ngDialog) {
+  .controller("DocumentsListCtrl", function ($scope, Documents, Customers, toaster, ngDialog, $cookies) {
 
     $scope.entity = {};
     $scope.entitys = [];
@@ -141,6 +141,10 @@ angular.module("docstore.documents", [])
         $scope.entitys = data;
       });
     };
+
+      $scope.fileUrl = function(documentId) {
+        return "/api/documents/"+documentId+"/download?key="+$cookies["XSRF-TOKEN"];
+      };
 
     $scope.refresh();
 

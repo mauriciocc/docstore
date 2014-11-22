@@ -48,10 +48,10 @@ object Documents extends Crud[Document] {
                 val okUpdated = ok.copy(databaseFileId = Some(dbFile.id)).update
             }
 
-              Notification.notifyAllUsers(
-                s"Um novo documento foi adicionado para o cliente <b>${ok.customer.toOption.get.name}</b>. O nome do documento é <b><i>${ok.name}</i></b> "+ (if(ok.dueDate.isDefined) " e vencerá no dia "+new SimpleDateFormat("dd/MM/yyyy").format(ok.dueDate.get) else ""),
-                Customer.responsiblesUsers(ok.customerId)
-              )
+            Notification.notifyAllUsers(
+              s"Um novo documento foi adicionado para o cliente <b>${ok.customer.toOption.get.name}</b>. O nome do documento é <b><i>${ok.name}</i></b> " + (if (ok.dueDate.isDefined) " e vencerá no dia " + new SimpleDateFormat("dd/MM/yyyy").format(ok.dueDate.get) else ""),
+              Customer.responsiblesUsers(ok.customerId)
+            )
             Ok(Json.toJson(ok))
           case Left(errors) => BadRequest(errors.toString())
         }
@@ -71,13 +71,19 @@ object Documents extends Crud[Document] {
 
 
 
-  def download(id: Long) = Action { implicit request =>
-    val dbFile = Document.databaseFileFor(id).get
-    var disposition = s"""inline; filename="${dbFile.name}"""""
-    Ok(dbFile.content).withHeaders(
-      CONTENT_TYPE -> dbFile.contentType,
-      CONTENT_DISPOSITION -> disposition
-    )
+  def download(id: Long) = HasToken() { _ => currentUserId => implicit req =>
+    Document.databaseFileFor(id) match {
+      case Some(dbFile) =>
+        var disposition = s"""inline; filename="${dbFile.name}"""""
+        DatabaseFileDownload(currentUserId, dbFile.id).create
+        Ok(dbFile.content).withHeaders(
+          CONTENT_TYPE -> dbFile.contentType,
+          CONTENT_DISPOSITION -> disposition
+        )
+      case None =>
+        NotFound
+    }
+
   }
 
 

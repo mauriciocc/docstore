@@ -23,7 +23,7 @@
                     <td>{{entity.name}}</td>
                     <td>{{ findCustomerWithId(entity.customerId).name }}</td>
                     <td>
-                        <a href="/api/documents/{{entity.id}}/download" target="_blank" class="btn btn-success btn-sm">
+                        <a href="{{fileUrl(entity.id)}}" target="_blank" class="btn btn-success btn-sm">
                             <i class="fa fa-cloud-download"></i>
                         </a>
                         <button ng-click="edit(entity.id)" class="btn btn-warning btn-sm">
