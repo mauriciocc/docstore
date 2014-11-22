@@ -10,6 +10,15 @@ case class Customer(name: String, officeId: Long, override val id: Long = 0) ext
 }
 
 object Customer extends ActiveRecordCompanion[Customer] with PlayFormSupport[Customer] {
+  def responsiblesUsers(id: Long): Seq[Long] = {
+    Customer.find(id) match {
+      case Some(c) =>
+        User.all.map(u => u.id).toSeq
+      case None =>
+        Seq.empty
+    }
+  }
+
   implicit val format = Json.format[Customer]
 
   def forUser(id: Long) = {

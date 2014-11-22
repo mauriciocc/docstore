@@ -1,6 +1,7 @@
 package controllers
 
 import java.nio.file.Files
+import java.sql.Timestamp
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
@@ -27,7 +28,7 @@ object Notifications extends Crud[Notification] {
     Notification.find(id) match {
       case Some(notification) =>
         Ok(Json.toJson(
-          notification.copy(readDate = Some(new Date())).update
+          notification.copy(readAt = Some(new Timestamp(new Date().getTime))).update
         ))
       case None =>
         NotFound

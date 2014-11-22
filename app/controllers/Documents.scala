@@ -1,6 +1,7 @@
 package controllers
 
 import java.nio.file.Files
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 import com.github.aselab.activerecord.{ActiveRecordCompanion, PlayFormSupport}
@@ -33,7 +34,8 @@ object Documents extends Crud[Document] {
     companion.form.bindFromRequest.fold(
       errors => {
         BadRequest(errors.errorsAsJson)
-      }, entity =>
+      }, entity => {
+        val isNewRecord = entity.isNewRecord
         entity.saveEither match {
           case Right(ok) =>
             val key = currentUserId + "upload"
@@ -45,9 +47,15 @@ object Documents extends Crud[Document] {
                 val dbFile = DatabaseFile(file.filename, contentType, bytes).create
                 val okUpdated = ok.copy(databaseFileId = Some(dbFile.id)).update
             }
+
+              Notification.notifyAllUsers(
+                s"Um novo documento foi adicionado para o cliente <b>${ok.customer.toOption.get.name}</b>. O nome do documento é <b><i>${ok.name}</i></b> "+ (if(ok.dueDate.isDefined) " e vencerá no dia "+new SimpleDateFormat("dd/MM/yyyy").format(ok.dueDate.get) else ""),
+                Customer.responsiblesUsers(ok.customerId)
+              )
             Ok(Json.toJson(ok))
           case Left(errors) => BadRequest(errors.toString())
         }
+      }
     )
 
   }

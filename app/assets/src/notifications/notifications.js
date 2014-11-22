@@ -17,7 +17,7 @@ angular.module("docstore.notifications", [])
             Notifications.findAll().success(function (data) {
                 $scope.newCount = 0;
                 data.forEach(function (item) {
-                    if(!item.readDate) {
+                    if(!item.readAt) {
                         $scope.newCount++;
                     }
                 });

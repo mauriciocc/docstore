@@ -4,6 +4,7 @@ angular.module("docstore", [
     "toaster",
     "i18n",
     "ngDialog",
+    "ngSanitize",
     "angularFileUpload",
     /*"smart-table",*/
     "docstore.login",

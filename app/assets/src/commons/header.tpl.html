@@ -27,22 +27,22 @@
                         <li style="cursor:default;">
                             <ul class="menu" style="cursor:default;">
 
-                                <li ng-repeat="n in notifications" style="cursor:default;">
+                                <li ng-repeat="n in notifications | limitTo: 5" style="cursor:default;" >
                                     <a href="#" style="cursor:default;">
                                         <div class="pull-left">
-                                            <div class="img-circle avatar-border">
+                                            <div class="img-circle avatar-border" style="    margin-left: 12px;    margin-top: 8px;    font-size: 20px;">
                                                 <i class="fa fa-file"></i>
                                             </div>
                                         </div>
                                         <h4>
                                             DocStore
                                             <small>
-                                                <i class="fa fa-eye" ng-show="!n.readDate" ng-click="markAsRead(n);" style="cursor:pointer; color: #428BCA;"></i>
+                                                <i class="fa fa-eye" ng-show="!n.readAt" ng-click="markAsRead(n);" style="cursor:pointer; color: #428BCA;"></i>
                                                 <i class="fa fa-clock-o"></i>
                                                 5 mins
                                             </small>
                                         </h4>
-                                        <p>{{ n.message }}</p>
+                                        <p style="white-space: normal;text-align: justify;line-height: 15px;" ng-bind-html="n.message"></p>
                                     </a>
                                 </li>
                                 <!--<li>
