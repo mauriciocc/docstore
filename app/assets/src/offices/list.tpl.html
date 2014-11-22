@@ -3,7 +3,7 @@
         <fieldset>
             <legend>
                 {{ 'offices' | translate }}
-                <button ng-click="createNew()" class="btn btn-flat btn-success btn-sm pull-right">
+                <button ng-click="createNew()" class="btn btn-success btn-sm pull-right">
                     <i class="fa fa-plus"></i>
                 </button>
             </legend>
@@ -17,12 +17,12 @@
                     <td>{{office.name}}</td>
                     <td>{{ findOrganizationWithId(office.organizationId).name }}</td>
                     <td>
-                        <button ng-click="edit(office.id)" class="btn btn-flat btn-warning btn-sm">
+                        <button ng-click="edit(office.id)" class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
                         <button ng-click="remove(office.id)"
                                 confirmation-needed="{{'remove.confirmation' | translate: '{name: office.name}'}}"
-                                class="btn btn-flat btn-danger btn-sm">
+                                class="btn btn-danger btn-sm">
                             <i class="fa fa-remove"></i>
                         </button>
                     </td>

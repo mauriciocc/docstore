@@ -6,31 +6,29 @@
 
 
 
-                <button ng-click="createNew()" class="btn btn-flat btn-success btn-sm pull-right">
+                <button ng-click="createNew()" class="btn btn-success btn-sm pull-right">
                     <i class="fa fa-plus"></i>
                 </button>
-                <select ng-model="selectedCustomer" class="pull-right" style="margin-right: 10px;"
-                        ng-change="customerChanged()"
-                        ng-options="customer as customer.name for customer in customers" required>
-                </select>
             </legend>
             <table class="table table-condensed table-striped">
                 <tr>
                     <th translate>name</th>
+                    <th translate>customer</th>
                     <th></th>
                 </tr>
                 <tr ng-repeat="entity in entitys">
                     <td>{{entity.name}}</td>
+                    <td>{{ findCustomerWithId(entity.customerId).name }}</td>
                     <td>
-                        <a href="/api/documents/{{entity.id}}/download" target="_blank" class="btn btn-success">
+                        <a href="/api/documents/{{entity.id}}/download" target="_blank" class="btn btn-success btn-sm">
                             <i class="fa fa-cloud-download"></i>
                         </a>
-                        <button ng-click="edit(entity.id)" class="btn btn-flat btn-warning btn-sm">
+                        <button ng-click="edit(entity.id)" class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
                         <button ng-click="remove(entity.id)"
                                 confirmation-needed="{{'remove.confirmation' | translate: '{name: entity.name}'}}"
-                                class="btn btn-flat btn-danger btn-sm">
+                                class="btn btn-danger btn-sm">
                             <i class="fa fa-remove"></i>
                         </button>
                     </td>
