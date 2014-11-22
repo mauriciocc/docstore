@@ -7,12 +7,15 @@
                     <i class="fa fa-plus"></i>
                 </button>
             </legend>
-            <table class="table table-condensed table-striped">
+            <table class="table table-condensed table-striped" datatable="ng">
+                <thead>
                 <tr>
                     <th translate>name</th>
                     <th translate>organization</th>
-                    <th></th>
+                    <th style="text-align: center; width: 75px;"></th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr ng-repeat="office in offices">
                     <td>{{office.name}}</td>
                     <td>{{ findOrganizationWithId(office.organizationId).name }}</td>
@@ -27,6 +30,7 @@
                         </button>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </fieldset>
     </div>

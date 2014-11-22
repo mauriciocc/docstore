@@ -6,7 +6,7 @@ angular.module("docstore", [
     "ngDialog",
     "ngSanitize",
     "angularFileUpload",
-    /*"smart-table",*/
+    'datatables',
     "docstore.login",
     "docstore.login.register",
     "docstore.home",

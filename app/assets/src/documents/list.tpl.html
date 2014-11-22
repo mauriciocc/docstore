@@ -10,12 +10,15 @@
                     <i class="fa fa-plus"></i>
                 </button>
             </legend>
-            <table class="table table-condensed table-striped">
+            <table class="table table-condensed table-striped" datatable="ng">
+                <thead>
                 <tr>
                     <th translate>name</th>
                     <th translate>customer</th>
-                    <th></th>
+                    <th style="text-align: center; width: 100px;"></th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr ng-repeat="entity in entitys">
                     <td>{{entity.name}}</td>
                     <td>{{ findCustomerWithId(entity.customerId).name }}</td>
@@ -33,6 +36,7 @@
                         </button>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </fieldset>
     </div>
