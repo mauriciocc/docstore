@@ -13,6 +13,10 @@ angular.module("docstore.notifications", [])
         $scope.notifications = [];
         $scope.newCount = 0;
 
+        $scope.$on('documents:created', function(event, data) {
+           $scope.refresh();
+        });
+
         $scope.refresh = function () {
             Notifications.findAll().success(function (data) {
                 $scope.newCount = 0;

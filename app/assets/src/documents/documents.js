@@ -25,7 +25,7 @@ angular.module("docstore.documents", [])
       }
     };
   })
-  .controller("DocumentsListCtrl", function ($scope, Documents, Customers, toaster, ngDialog, $cookies) {
+  .controller("DocumentsListCtrl", function ($scope, $rootScope, Documents, Customers, toaster, ngDialog, $cookies) {
 
     $scope.entity = {};
     $scope.entitys = [];
@@ -57,7 +57,11 @@ angular.module("docstore.documents", [])
     $scope.save = function (entity, form) {
       if (form.$valid) {
         var save = function () {
+          var isNew = !entity.id || entity.id === 0;
           Documents.save(entity).success(function () {
+            if(isNew) {
+              $rootScope.$broadcast('documents:created', entity);
+            }
             $scope.refresh();
             $scope.editing = false;
             toaster.pop('success', "Documento salvo com sucesso...");
