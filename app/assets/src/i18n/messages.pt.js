@@ -12,7 +12,7 @@ angular.module('i18n', ['pascalprecht.translate'])
             'polar.bear.message': 'Tá frio aqui no polo véi...',
             'brown.bear': 'Urso Marrom',
             'brown.bear.message': 'Cara, olha só o salmão que peguei hoje:',
-            'you.have.x.messages': "Você tem {{messages}} {{messages == 1 ? 'mensagem' :'mensagens'}}",
+            'you.have.x.messages': "{{messages === 0 ? 'Nenhuma nova mensagem' : ('Você tem ' + messages + ' nova'+(messages == 1 ? ' mensagem' :'s mensagens'))}}",
             'you.have.x.notifications': "Você tem {{notifications}} {{notifications == 1 ? 'notificação' :'notificações'}}",
             'see.all.messages': 'Ver todas mensagens',
             'my.profile': 'Meu perfil',

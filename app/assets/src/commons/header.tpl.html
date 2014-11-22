@@ -39,7 +39,7 @@
                                             <small>
                                                 <i class="fa fa-eye" ng-show="!n.readAt" ng-click="markAsRead(n);" style="cursor:pointer; color: #428BCA;"></i>
                                                 <i class="fa fa-clock-o"></i>
-                                                5 mins
+                                                <moment millis="{{n.createdAt}}"></moment><!--5 mins-->
                                             </small>
                                         </h4>
                                         <p style="white-space: normal;text-align: justify;line-height: 15px;" ng-bind-html="n.message"></p>

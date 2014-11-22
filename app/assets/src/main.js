@@ -1,3 +1,7 @@
+$(function(){
+    moment.locale("pt-br");
+});
+
 angular.module("docstore.main", [])
     .factory("Page", function ($location) {
 

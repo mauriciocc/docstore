@@ -71,6 +71,15 @@ angular.module("docstore", [
             .otherwise({redirectTo: '/login'});
         $locationProvider.html5Mode(true);
     }])
+    .directive('moment', function ($compile) {
+        return {
+            restrict: 'E',
+            link: function(scope, element, attrs) {
+                element[0].outerHTML = moment(Number(attrs.millis)).fromNow();
+                $compile(element.contents())(scope);
+            }
+        };
+    })
     .directive('confirmationNeeded', function () {
         return {
             priority: 1,
