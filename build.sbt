@@ -11,7 +11,6 @@ scalaVersion := "2.11.4"
 libraryDependencies ++= Seq(
   jdbc,  
   filters,
-  anorm,
   cache,
   "org.postgresql" % "postgresql" % "9.3-1102-jdbc41",
   "com.google.guava" % "guava" % "18.0",
