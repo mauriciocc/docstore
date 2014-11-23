@@ -1,6 +1,5 @@
 # --- !Ups
 
-ALTER TABLE account RENAME owner_id to user_id;
 ALTER TABLE document DROP COLUMN IF EXISTS creation_date;
 ALTER TABLE document DROP COLUMN IF EXISTS due_date;
 ALTER TABLE document ADD COLUMN due_date DATE;
