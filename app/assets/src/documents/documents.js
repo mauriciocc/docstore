@@ -104,6 +104,9 @@ angular.module("docstore.documents", [])
 
     $scope.edit = function (id) {
       Documents.findOne(id).success(function (data) {
+        if(data.dueDate) {
+          data.dueDate = new Date(data.dueDate);
+        }
         $scope.entity = data;
         $scope.editing = true;
       });

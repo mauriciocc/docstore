@@ -12,10 +12,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
+
         <div class="navbar-right">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
-               <li class="dropdown messages-menu" ng-controller="NotificationsCtrl">
+                <li class="dropdown messages-menu" ng-controller="NotificationsCtrl">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope"></i>
                         <span class="label label-success">{{newCount}}</span>
@@ -23,26 +24,31 @@
                     <ul class="dropdown-menu">
                         <li class="header">
                             {{ 'you.have.x.messages' | translate: '{messages: newCount}'}}
-                                <i class="fa fa-refresh pull-right" ng-click="refresh();" style="cursor:pointer; color: #428BCA;"></i>
+                            <i class="fa fa-refresh pull-right" ng-click="refresh();"
+                               style="cursor:pointer; color: #428BCA;"></i>
                         <li style="cursor:default;">
                             <ul class="menu" style="cursor:default;">
 
-                                <li ng-repeat="n in notifications | limitTo: 5" style="cursor:default;" >
+                                <li ng-repeat="n in notifications | limitTo: 5" style="cursor:default;">
                                     <a href="#" style="cursor:default;">
                                         <div class="pull-left">
-                                            <div class="img-circle avatar-border" style="    margin-left: 12px;    margin-top: 8px;    font-size: 20px;">
+                                            <div class="img-circle avatar-border"
+                                                 style="    margin-left: 12px;    margin-top: 8px;    font-size: 20px;">
                                                 <i class="fa fa-file"></i>
                                             </div>
                                         </div>
                                         <h4>
                                             DocStore
                                             <small>
-                                                <i class="fa fa-eye" ng-show="!n.readAt" ng-click="markAsRead(n);" style="cursor:pointer; color: #428BCA;"></i>
+                                                <i class="fa fa-eye" ng-show="!n.readAt" ng-click="markAsRead(n);"
+                                                   style="cursor:pointer; color: #428BCA;"></i>
                                                 <i class="fa fa-clock-o"></i>
-                                                <moment millis="{{n.createdAt}}"></moment><!--5 mins-->
+                                                <moment value="{{n.createdAt}}"></moment>
+                                                <!--5 mins-->
                                             </small>
                                         </h4>
-                                        <p style="white-space: normal;text-align: justify;line-height: 15px;" ng-bind-html="n.message"></p>
+                                        <p style="white-space: normal;text-align: justify;line-height: 15px;"
+                                           ng-bind-html="n.message"></p>
                                     </a>
                                 </li>
                                 <!--<li>
@@ -92,23 +98,27 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle navbar-avatar-parent" data-toggle="dropdown">
-                        <img src="https://getsatisfaction.com/images/user_default_large.png" class="img-circle navbar-avatar" alt="User Image" />
+                        <img src="https://getsatisfaction.com/images/user_default_large.png"
+                             class="img-circle navbar-avatar" alt="User Image"/>
                     </a>
                     <ul class="dropdown-menu user-dropdown">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="https://getsatisfaction.com/images/user_default_large.png" class="img-circle" alt="User Image" />
+                            <img src="https://getsatisfaction.com/images/user_default_large.png" class="img-circle"
+                                 alt="User Image"/>
+
                             <p>
                                 {{ currentUserName() }}
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-<!--                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-sm">{{ 'my.profile' | translate }}</a>
-                            </div>-->
+                            <!--                            <div class="pull-left">
+                                                            <a href="#" class="btn btn-default btn-sm">{{ 'my.profile' | translate }}</a>
+                                                        </div>-->
                             <div class="pull-right" ng-controller="LoginCtrl">
-                                <a href="#" class="btn btn-default btn-sm" ng-click="logout()">{{ 'sign.out' | translate }}</a>
+                                <a href="#" class="btn btn-default btn-sm" ng-click="logout()">{{ 'sign.out' | translate
+                                    }}</a>
                             </div>
                         </li>
                     </ul>
@@ -117,3 +127,11 @@
         </div>
     </nav>
 </header>
+
+<script type="application/javascript">
+    $(function () {
+        $(".dropdown-menu").on("click", function (e) {
+            e.stopPropagation();
+        });
+    });
+</script>

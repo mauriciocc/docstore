@@ -74,8 +74,26 @@ angular.module("docstore", [
     .directive('moment', function ($compile) {
         return {
             restrict: 'E',
-            link: function(scope, element, attrs) {
-                element[0].outerHTML = moment(Number(attrs.millis)).fromNow();
+            self: this,
+            link: function (scope, element, attrs) {
+                var content;
+                var value = attrs.value;
+                if (value) {
+                    if (!isNaN(value)) {
+                        value = Number(value);
+                    }
+                    var parsed = moment(value);
+                    if (attrs.hasOwnProperty('dateTime')) {
+                        content = moment(parsed).format("DD/MM/YYYY HH:mm:ss");
+                    } else if (attrs.hasOwnProperty('date')) {
+                        content = moment(parsed).format("DD/MM/YYYY");
+                    } else {
+                        content = moment(parsed).fromNow();
+                    }
+                } else {
+                    content = "-";
+                }
+                element[0].outerHTML = content;
                 $compile(element.contents())(scope);
             }
         };
@@ -88,7 +106,8 @@ angular.module("docstore", [
                 var msg = attr.confirmationNeeded || "Are you sure?";
                 var clickAction = attr.ngClick;
                 element.bind('click', function () {
-                    swal({   title: "Tem certeza que deseja excluir este item ?",
+                    swal({
+                        title: "Tem certeza que deseja excluir este item ?",
                         text: "Após exclusão não será possivel recuperar este registro",
                         type: "warning",
                         showCancelButton: true,
@@ -113,7 +132,7 @@ angular.module("docstore", [
             }
         });
 
-    }).run(function(DTDefaultOptions) {
+    }).run(function (DTDefaultOptions) {
         var lang = {
             "sEmptyTable": "Nenhum registro encontrado",
             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",

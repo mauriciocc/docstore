@@ -4,6 +4,8 @@ import java.sql.Timestamp
 import java.util.Date
 
 import com.github.aselab.activerecord.{ActiveRecord, ActiveRecordCompanion, PlayFormSupport}
+import play.api.libs.json.Json
+import utils.JsonFormats
 
 case class DatabaseFileDownload(userId: Long,
                                 databaseFileId: Long,
@@ -13,4 +15,7 @@ case class DatabaseFileDownload(userId: Long,
   lazy val user = belongsTo[User]
 }
 
-object DatabaseFileDownload extends ActiveRecordCompanion[DatabaseFileDownload] with PlayFormSupport[DatabaseFileDownload]
+object DatabaseFileDownload extends ActiveRecordCompanion[DatabaseFileDownload] with PlayFormSupport[DatabaseFileDownload] {
+  implicit val timestampFormat = JsonFormats.timestampFormat
+  implicit val format = Json.format[DatabaseFileDownload]
+}

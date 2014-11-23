@@ -4,8 +4,6 @@
             <legend>
                 {{ 'documents' | translate }}
 
-
-
                 <button ng-click="createNew()" class="btn btn-success btn-sm pull-right">
                     <i class="fa fa-plus"></i>
                 </button>
@@ -15,21 +13,29 @@
                 <tr>
                     <th translate>name</th>
                     <th translate>customer</th>
+                    <th translate>created.at</th>
+                    <th translate>due.date</th>
                     <th style="text-align: center; width: 100px;"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="entity in entitys">
-                    <td>{{entity.name}}</td>
-                    <td>{{ findCustomerWithId(entity.customerId).name }}</td>
+                    <td>{{entity.document.name}}</td>
+                    <td>{{ entity.customer.name }}</td>
                     <td>
-                        <a href="{{fileUrl(entity.id)}}" target="_blank" class="btn btn-success btn-sm">
+                        <moment value="{{ entity.document.createdAt }}" date-time></moment>
+                    </td>
+                    <td>
+                        <moment value="{{ entity.document.dueDate }}" date></moment>
+                    </td>
+                    <td>
+                        <a href="{{fileUrl(entity.document.id)}}" target="_blank" class="btn btn-success btn-sm">
                             <i class="fa fa-cloud-download"></i>
                         </a>
-                        <button ng-click="edit(entity.id)" class="btn btn-warning btn-sm">
+                        <button ng-click="edit(entity.document.id)" class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button ng-click="remove(entity.id)"
+                        <button ng-click="remove(entity.document.id)"
                                 confirmation-needed="{{'remove.confirmation' | translate: '{name: entity.name}'}}"
                                 class="btn btn-danger btn-sm">
                             <i class="fa fa-remove"></i>

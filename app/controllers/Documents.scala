@@ -4,12 +4,12 @@ import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
-import com.github.aselab.activerecord.{ActiveRecordCompanion, PlayFormSupport}
+import com.github.aselab.activerecord._
+import com.github.aselab.activerecord.dsl._
 import models._
 import play.api.cache.Cache
 import play.api.libs.Files.TemporaryFile
 import play.api.libs.json._
-import play.api.mvc._
 
 import scala.concurrent.duration.Duration
 
@@ -19,16 +19,24 @@ object Documents extends Crud[Document] {
   override val companion: ActiveRecordCompanion[Document] with PlayFormSupport[Document] = Document
   override implicit val format = Document.format
 
-  def findAll(customerId: Long) = HasToken() { _ => currentUserId => implicit request =>
-    Ok(Json.toJson(Document.forCustomer(customerId)));
+  implicit val findAllWrites = new Writes[List[(Document, Customer)]] {
+    override def writes(o: List[(Document, Customer)]): JsValue = {
+      JsArray(
+        o.map({ row =>
+          Json.obj(
+            "document" -> Json.toJson(row._1),
+            "customer" -> Json.toJson(row._2)
+          )
+        })
+      )
+    }
   }
 
-
-  /*override def save() = HasToken() { _ => currentUserId => implicit req =>
-    super.save()
-/*    */
-
-  }*/
+  def findAll(customerId: Long) = HasToken() { _ => currentUserId => implicit request =>
+    Ok(Json.toJson(
+      Document.forCustomer(customerId)
+    ))
+  }
 
   override def save() = HasToken() { _ => currentUserId => implicit req =>
     companion.form.bindFromRequest.fold(
@@ -44,7 +52,7 @@ object Documents extends Crud[Document] {
                 val file = value.asInstanceOf[play.api.mvc.MultipartFormData.FilePart[TemporaryFile]]
                 val bytes = Files.readAllBytes(file.ref.file.toPath)
                 val contentType = file.contentType.getOrElse("application/octet-stream")
-                val dbFile = DatabaseFile(file.filename, contentType, bytes).create
+                val dbFile = DatabaseFile(file.filename, contentType, bytes, bytes.length).create
                 val okUpdated = ok.copy(databaseFileId = Some(dbFile.id)).update
             }
 
@@ -68,7 +76,6 @@ object Documents extends Crud[Document] {
       BadRequest("Error on upload")
     }
   }
-
 
 
   def download(id: Long) = HasToken() { _ => currentUserId => implicit req =>
