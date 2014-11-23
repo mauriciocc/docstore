@@ -29,11 +29,21 @@ object Document extends ActiveRecordCompanion[Document] with PlayFormSupport[Doc
     )
   }
 
+  def lastDownloadFor(doc: Document) = {
+    try {
+      doc.databaseFile.get.databaseFileDownload.limit(1).orderBy(_.downloadedAt desc).headOption
+    }
+    catch {
+      case e: Exception => None
+    }
+  }
+
   def forCustomer(id: Long) = {
     Document
-      .joins[Customer]( (doc, cust) => doc.customerId === cust.id)
-      .where( (doc, cust) => doc.customerId === id)
+      .joins[Customer]((doc, cust) => doc.customerId === cust.id)
+      .where((doc, cust) => doc.customerId === id)
       .select((doc, cust) => (doc, cust))
+      .map(r => (r._1, r._2, lastDownloadFor(r._1)))
       .toList
   }
 

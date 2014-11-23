@@ -15,6 +15,7 @@
                     <th translate>customer</th>
                     <th translate>created.at</th>
                     <th translate>due.date</th>
+                    <th translate>last.download.date</th>
                     <th style="text-align: center; width: 100px;"></th>
                 </tr>
                 </thead>
@@ -27,6 +28,9 @@
                     </td>
                     <td>
                         <moment value="{{ entity.document.dueDate }}" date></moment>
+                    </td>
+                    <td>
+                        <moment value="{{ entity.downloadInfo.downloadedAt }}" date-time></moment>
                     </td>
                     <td>
                         <a href="{{fileUrl(entity.document.id)}}" target="_blank" class="btn btn-success btn-sm">

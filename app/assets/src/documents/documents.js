@@ -37,7 +37,7 @@ angular.module("docstore.documents", [])
     var reset = function () {
       $scope.entity = {};
       $scope.files = null;
-      /*$scope.entity.customerId = $scope.customers[0].id;*/
+      $scope.entity.customerId = $scope.customers[0].id;
     };
 
     $scope.refresh = function () {
@@ -49,15 +49,22 @@ angular.module("docstore.documents", [])
         Documents.findAll($scope.selectedCustomer.id).success(function (data) {
           $scope.entitys = data;
         });
+        reset();
       });
-      reset();
+
 
     };
 
     $scope.save = function (entity, form) {
       if (form.$valid) {
+        var isNew = !entity.id || entity.id === 0;
+        if(isNew) {
+          if(!$scope.files){
+            toaster.pop('warning', "É necessário selecionar um arquivo...");
+            return;
+          }
+        }
         var save = function () {
-          var isNew = !entity.id || entity.id === 0;
           Documents.save(entity).success(function () {
             if(isNew) {
               $rootScope.$broadcast('documents:created', entity);

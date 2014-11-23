@@ -51,7 +51,8 @@ angular.module('i18n', ['pascalprecht.translate'])
             'office': "Escritório",
             'document': "Documento",
             'due.date': "Data de Vencimento",
-            'created.at': "Data de criação"
+            'created.at': "Data de criação",
+            'last.download.date': "Data do Último Download"
         });
         $translateProvider.preferredLanguage('pt');
     }])

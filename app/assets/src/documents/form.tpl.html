@@ -22,12 +22,12 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" translate>customer</label>
-                            <select name="accountId" ng-model="entity.customerId" class="form-control"
+                            <select name="customerId" ng-model="entity.customerId" class="form-control"
                                     ng-options="customer.id as customer.name for customer in customers" required>
                             </select>
 
-                            <div class="error-container" ng-show="documentForm.name.$invalid && documentForm.submitted">
-                                <span class="error" ng-show="documentForm.name.$error.required"
+                            <div class="error-container" ng-show="documentForm.customerId.$invalid && documentForm.submitted">
+                                <span class="error" ng-show="documentForm.customerId.$error.required"
                                       translate>required</span>
                             </div>
                         </div>

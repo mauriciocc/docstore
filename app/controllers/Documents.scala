@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 import com.github.aselab.activerecord._
-import com.github.aselab.activerecord.dsl._
 import models._
 import play.api.cache.Cache
 import play.api.libs.Files.TemporaryFile
 import play.api.libs.json._
+import play.api.mvc.Action
 
 import scala.concurrent.duration.Duration
 
@@ -19,13 +19,14 @@ object Documents extends Crud[Document] {
   override val companion: ActiveRecordCompanion[Document] with PlayFormSupport[Document] = Document
   override implicit val format = Document.format
 
-  implicit val findAllWrites = new Writes[List[(Document, Customer)]] {
-    override def writes(o: List[(Document, Customer)]): JsValue = {
+  implicit val findAllWrites = new Writes[List[(Document, Customer, Option[DatabaseFileDownload])]] {
+    override def writes(o: List[(Document, Customer, Option[DatabaseFileDownload])]): JsValue = {
       JsArray(
         o.map({ row =>
           Json.obj(
             "document" -> Json.toJson(row._1),
-            "customer" -> Json.toJson(row._2)
+            "customer" -> Json.toJson(row._2),
+            "downloadInfo" -> row._3
           )
         })
       )
@@ -43,19 +44,14 @@ object Documents extends Crud[Document] {
       errors => {
         BadRequest(errors.errorsAsJson)
       }, entity => {
-        val isNewRecord = entity.isNewRecord
-        entity.saveEither match {
-          case Right(ok) =>
-            val key = currentUserId + "upload"
-            val doc = Cache.get(key) match {
-              case Some(value) =>
-                val file = value.asInstanceOf[play.api.mvc.MultipartFormData.FilePart[TemporaryFile]]
-                val bytes = Files.readAllBytes(file.ref.file.toPath)
-                val contentType = file.contentType.getOrElse("application/octet-stream")
-                val dbFile = DatabaseFile(file.filename, contentType, bytes, bytes.length).create
-                val okUpdated = ok.copy(databaseFileId = Some(dbFile.id)).update
-            }
+        val file = createFileFromUpload(currentUserId)
 
+        if(file.isEmpty) {
+          throw new RuntimeException("Need file to create document")
+        }
+
+        entity.copy(databaseFileId = Some(file.get.id)).saveEither match {
+          case Right(ok) =>
             Notification.notifyAllUsers(
               s"Um novo documento foi adicionado para o cliente <b>${ok.customer.toOption.get.name}</b>. O nome do documento é <b><i>${ok.name}</i></b> " + (if (ok.dueDate.isDefined) " e vencerá no dia " + new SimpleDateFormat("dd/MM/yyyy").format(ok.dueDate.get) else "" + "."),
               Customer.responsiblesUsers(ok.customerId)
@@ -65,7 +61,49 @@ object Documents extends Crud[Document] {
         }
       }
     )
+  }
 
+  def createFileFromUpload(userId: Long) = {
+    val key = userId + "upload"
+    Cache.get(key) match {
+      case Some(value) =>
+        val file = value.asInstanceOf[play.api.mvc.MultipartFormData.FilePart[TemporaryFile]]
+        val bytes = Files.readAllBytes(file.ref.file.toPath)
+        val contentType = file.contentType.getOrElse("application/octet-stream")
+        Cache.remove(key)
+        Some(DatabaseFile(file.filename, contentType, bytes, bytes.length).create)
+      case None =>
+        None
+    }
+  }
+
+  override def update(id: Long) = HasToken() { _ => currentUserId => implicit req =>
+    companion.find(id) match {
+      case Some(entity) =>
+        companion.form(entity).bindFromRequest.fold(
+          errors => {
+            BadRequest(errors.errorsAsJson)
+          }, entity => {
+            val fileID = createFileFromUpload(currentUserId) match {
+              case Some(file) =>
+                entity.databaseFileId match {
+                  case Some(dbFileId) =>
+                    DatabaseFile.find(dbFileId) match {
+                      case Some(foundFile) => foundFile.delete()
+                    }
+                }
+                Some(file.id)
+              case None =>
+                entity.databaseFileId
+            }
+            entity.copy(databaseFileId = fileID).saveEither match {
+              case Right(ok) =>
+                Ok(Json.toJson(ok))
+              case Left(errors) => BadRequest(errors.toString())
+            }
+          }
+        )
+    }
   }
 
   def upload = HasToken(parse.multipartFormData) { _ => userId => request =>

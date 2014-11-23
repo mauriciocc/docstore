@@ -17,11 +17,11 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" translate>office</label>
-                            <select name="accountId" ng-model="entity.officeId" class="form-control"
+                            <select name="officeId" ng-model="entity.officeId" class="form-control"
                                     ng-options="office.id as office.name for office in offices" required>
                             </select>
-                            <div class="error-container" ng-show="customerForm.name.$invalid && customerForm.submitted">
-                                <span class="error" ng-show="customerForm.name.$error.required" translate>required</span>
+                            <div class="error-container" ng-show="customerForm.officeId.$invalid && customerForm.submitted">
+                                <span class="error" ng-show="customerForm.officeId.$error.required" translate>required</span>
                             </div>
                         </div>
                     </div>
