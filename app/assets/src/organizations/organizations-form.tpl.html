@@ -20,8 +20,8 @@
                             <select name="accountId" ng-model="organization.accountId" class="form-control"
                                     ng-options="account.id as account.name for account in accounts" required>
                             </select>
-                            <div class="error-container" ng-show="organizationForm.name.$invalid && organizationForm.submitted">
-                                <span class="error" ng-show="organizationForm.name.$error.required" translate>required</span>
+                            <div class="error-container" ng-show="organizationForm.accountId.$invalid && organizationForm.submitted">
+                                <span class="error" ng-show="organizationForm.accountId.$error.required" translate>required</span>
                             </div>
                         </div>
                     </div>
