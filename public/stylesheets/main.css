@@ -196,3 +196,17 @@ body  .header .logo .icon {
 .stretch {
     margin-left: 0;
 }
+
+.loading-spiner-holder {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.loading-spiner {
+    width: 50px;
+}
+
+.loading-spiner>img {
+    width: 100%;
+}

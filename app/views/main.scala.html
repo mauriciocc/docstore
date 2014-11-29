@@ -3,7 +3,7 @@
 
 <html ng-app="docstore" ng-controller="MainCtrl">
     <head>
-        <title translate="{{pageTitle()}}"></title>
+        <link rel="stylesheet" type="text/css" href="public/stylesheets/main.css"/><title translate="{{pageTitle()}}"></title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/font-awesome/css/font-awesome.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/ionicons/css/ionicons.css")">
@@ -24,6 +24,11 @@
         <ng-include src="'/assets/src/commons/body.tpl.html'" ng-if="!loginPage()"></ng-include>
         <div ng-view ng-if="loginPage()"></div>
         <toaster-container></toaster-container>
+        <div class="loading-spiner-holder" loading>
+            <div class="loading-spiner">
+                <img src="@routes.Assets.versioned("images/ajax.gif")" alt="Loading...">
+            </div>
+        </div>
         <script src="@routes.Assets.versioned("lib/jquery/jquery.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("vendor/angular-datatables-0.3.0/jquery.dataTables.min.js")" type="application/javascript"></script>
         <script src="@routes.Assets.versioned("vendor/ng-upload/angular-file-upload-shim.min.js")" type="application/javascript"></script>
