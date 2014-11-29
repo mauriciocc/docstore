@@ -39,6 +39,13 @@ DELETE        /api/customers/:id                                  controllers.Cu
 POST          /api/customers                                      controllers.Customers.save
 PUT           /api/customers/:id                                  controllers.Customers.update(id: Long)
 
+# Customers
+GET           /api/categories                                      controllers.Categories.findAll()
+GET           /api/categories/:id                                  controllers.Categories.findOne(id: Long)
+DELETE        /api/categories/:id                                  controllers.Categories.remove(id: Long)
+POST          /api/categories                                      controllers.Categories.save
+PUT           /api/categories/:id                                  controllers.Categories.update(id: Long)
+
 # Documents
 GET           /api/customers/$customerId<[0-9]+>/documents        controllers.Documents.findAll(customerId: Long)
 GET           /api/documents/:id                                  controllers.Documents.findOne(id: Long)

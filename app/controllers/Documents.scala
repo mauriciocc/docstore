@@ -19,14 +19,15 @@ object Documents extends Crud[Document] {
   override val companion: ActiveRecordCompanion[Document] with PlayFormSupport[Document] = Document
   override implicit val format = Document.format
 
-  implicit val findAllWrites = new Writes[List[(Document, Customer, Option[DatabaseFileDownload])]] {
-    override def writes(o: List[(Document, Customer, Option[DatabaseFileDownload])]): JsValue = {
+  implicit val findAllWrites = new Writes[List[(Document, Customer, Category, Option[DatabaseFileDownload])]] {
+    override def writes(o: List[(Document, Customer, Category, Option[DatabaseFileDownload])]): JsValue = {
       JsArray(
         o.map({ row =>
           Json.obj(
             "document" -> Json.toJson(row._1),
             "customer" -> Json.toJson(row._2),
-            "downloadInfo" -> row._3
+            "category" -> Json.toJson(row._3),
+            "downloadInfo" -> row._4
           )
         })
       )

@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>
+                {{ 'categories' | translate }}
+                <button ng-click="createNew()" class="btn btn-success btn-sm pull-right">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </legend>
+            <table class="table table-condensed table-striped" datatable="ng">
+                <thead>
+                <tr>
+                    <th translate>name</th>
+                    <th style="text-align: center; width: 75px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="e in entities">
+                    <td>{{e.name}}</td>
+                    <td>
+                        <div ng-show="e.id !== 1">
+                        <button ng-click="edit(e.id)" class="btn btn-warning btn-sm">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button ng-click="remove(e.id)"
+                                confirmation-needed="{{'remove.confirmation' | translate: '{name: e.name}'}}"
+                                class="btn btn-danger btn-sm">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </div>
+</div>

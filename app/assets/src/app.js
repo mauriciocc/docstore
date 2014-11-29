@@ -14,6 +14,7 @@ angular.module("docstore", [
     "docstore.accounts",
     "docstore.offices",
     "docstore.customers",
+    "docstore.categories",
     "docstore.documents",
     "docstore.notifications",
     "docstore.main"])
@@ -63,12 +64,17 @@ angular.module("docstore", [
                 controller: 'CustomersListCtrl',
                 public: false
             })
+            .when('/categories', {
+                templateUrl: '/assets/src/categories/list.tpl.html',
+                controller: 'CategoriesListCtrl',
+                public: false
+            })
             .when('/documents', {
                 templateUrl: '/assets/src/documents/list.tpl.html',
                 controller: 'DocumentsListCtrl',
                 public: false
             })
-            .otherwise({redirectTo: '/login'});
+            .otherwise({redirectTo: '/home'});
         $locationProvider.html5Mode(true);
     }])
     .directive('moment', function ($compile) {

@@ -17,7 +17,7 @@ object Account extends ActiveRecordCompanion[Account] with PlayFormSupport[Accou
   def forUser(id: Long): List[Account] = {
     User.find(id) match {
       case Some(user) =>
-        user.accounts.toList
+        user.accounts.orderBy(_.name).toList
       case None =>
         List.empty
     }

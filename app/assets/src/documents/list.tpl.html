@@ -7,12 +7,19 @@
                 <button ng-click="createNew()" class="btn btn-success btn-sm pull-right">
                     <i class="fa fa-plus"></i>
                 </button>
+
+                <select ng-model="selectedCustomer" class="pull-right" style="margin-right: 10px;"
+                        ng-change="customerChanged()"
+                        ng-options="customer as customer.name for customer in customers" required>
+                </select>
+                <label translate class="pull-right" style="margin-right: 5px;"translate>{{ 'customer ' | translate}}</label>
             </legend>
             <table class="table table-condensed table-striped" datatable="ng">
                 <thead>
                 <tr>
-                    <th translate>name</th>
                     <th translate>customer</th>
+                    <th translate>category</th>
+                    <th translate>name</th>
                     <th translate>created.at</th>
                     <th translate>due.date</th>
                     <th translate>last.download.date</th>
@@ -21,8 +28,9 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="entity in entitys">
-                    <td>{{entity.document.name}}</td>
                     <td>{{ entity.customer.name }}</td>
+                    <td>{{ entity.category.name }}</td>
+                    <td>{{entity.document.name}}</td>
                     <td>
                         <moment value="{{ entity.document.createdAt }}" date-time></moment>
                     </td>
@@ -33,7 +41,7 @@
                         <moment value="{{ entity.downloadInfo.downloadedAt }}" date-time></moment>
                     </td>
                     <td>
-                        <a href="{{fileUrl(entity.document.id)}}" target="_blank" class="btn btn-success btn-sm">
+                        <a href="{{fileUrl(entity.document.id)}}" ng-click="refresh()" target="_blank" class="btn btn-success btn-sm">
                             <i class="fa fa-cloud-download"></i>
                         </a>
                         <button ng-click="edit(entity.document.id)" class="btn btn-warning btn-sm">

@@ -52,7 +52,9 @@ angular.module('i18n', ['pascalprecht.translate'])
             'document': "Documento",
             'due.date': "Data de Vencimento",
             'created.at': "Data de criação",
-            'last.download.date': "Data do Último Download"
+            'last.download.date': "Data do Último Download",
+            'categories': "Categorias",
+            'category': "Categoria"
         });
         $translateProvider.preferredLanguage('pt');
     }])

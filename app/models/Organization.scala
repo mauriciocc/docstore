@@ -16,7 +16,7 @@ object Organization extends ActiveRecordCompanion[Organization] with PlayFormSup
 
   def forUser(id: Long) = {
     Account.forUser(id).flatten(acc =>
-      acc.organizations.toList
+      acc.organizations.orderBy(_.name).toList
     )
   }
 

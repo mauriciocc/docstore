@@ -23,7 +23,7 @@ object Customer extends ActiveRecordCompanion[Customer] with PlayFormSupport[Cus
 
   def forUser(id: Long) = {
     Office.forUser(id).flatten( off =>
-      off.customers.toList
+      off.customers.orderBy(_.name).toList
     )
   }
 

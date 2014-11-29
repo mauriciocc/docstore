@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-12">
+        <fieldset>
+            <legend>{{editing ? 'Editando categoria' : 'Nova categoria'}}</legend>
+            <form name="entityForm" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" name="id" ng-model="entity.id"/>
+
+                        <div class="form-group">
+                            <label class="control-label" translate>name</label>
+                            <input type="text" class="form-control" name="name" ng-model="entity.name" required/>
+
+                            <div class="error-container" ng-show="entityForm.name.$invalid && entityForm.submitted">
+                                <span class="error" ng-show="entityForm.name.$error.required" translate>required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button type="button" class="btn btn-danger btn-flat" ng-click="closeThisDialog()">
+                            <i class="fa fa-remove"></i>
+                            {{'cancel' | translate}}
+                        </button>
+                        <button type="submit" class="btn btn-success btn-flat" ng-click="save(entity, entityForm)">
+                            <i class="fa fa-save"></i>
+                            {{'save' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>

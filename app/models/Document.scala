@@ -11,11 +11,13 @@ import utils.JsonFormats
 case class Document(name: String,
                     databaseFileId: Option[Long],
                     customerId: Long,
+                    categoryId: Long,
                     dueDate: Option[Date],
                     createdAt: Timestamp = new Timestamp(new Date().getTime),
                     override val id: Long = 0) extends ActiveRecord {
   lazy val customer = belongsTo[Customer]
   lazy val databaseFile = belongsTo[DatabaseFile]
+  lazy val category = hasOne[Category]
 }
 
 object Document extends ActiveRecordCompanion[Document] with PlayFormSupport[Document] {
@@ -40,10 +42,14 @@ object Document extends ActiveRecordCompanion[Document] with PlayFormSupport[Doc
 
   def forCustomer(id: Long) = {
     Document
-      .joins[Customer]((doc, cust) => doc.customerId === cust.id)
-      .where((doc, cust) => doc.customerId === id)
-      .select((doc, cust) => (doc, cust))
-      .map(r => (r._1, r._2, lastDownloadFor(r._1)))
+      .joins[Customer, Category]((doc, cust, cat) => (doc.customerId === cust.id, doc.categoryId === cat.id))
+      .where((doc, cust, cat) => doc.customerId === id)
+      .orderBy(
+        (doc, cust, cat) => cust.name,
+        (doc, cust, cat) => cat.name,
+        (doc, cust, cat) => doc.name
+      ).select((doc, cust, cat) => (doc, cust, cat))
+      .map(r => (r._1, r._2, r._3, lastDownloadFor(r._1)))
       .toList
   }
 

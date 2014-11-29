@@ -15,7 +15,7 @@ object Office extends ActiveRecordCompanion[Office] with PlayFormSupport[Office]
 
   def forUser(id: Long) = {
     Organization.forUser(id).flatten( org =>
-      org.offices.toList
+      org.offices.orderBy(_.name).toList
     )
   }
 
